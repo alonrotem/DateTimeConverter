@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- 
+  python -m http.server 8000 
+  https://trentrichardson.com/examples/timepicker/
+  https://jsfiddle.net/alrotem/bq2c0rtk/33/
+
+  https://github.com/alonrotem/DateTimeConverter
+-->
+<html>
+    <head>
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0" />
+      <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
+      <link href="https://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css" rel="stylesheet"/>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <!-- OPTION 1 
+      <script src="https://cdn.jsdelivr.net/npm/jtsage-datebox-bootstrap4@5.3.3/jtsage-datebox.min.js" type="text/javascript"></script>
+      <script src="https://cdn.jsdelivr.net/npm/jtsage-datebox-i18n@5.3.3/jtsage-datebox.i18n.he.utf8.min.js" type="text/javascript"></script>
+      -->
+      <!-- OPTION 2 -->
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://jqueryui.com/resources/demos/datepicker/i18n/datepicker-he.js"></script>
+      <!-- Latest compiled and minified CSS -->
+      <link 
+        rel="stylesheet"
+        href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
+        integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe"
+        crossorigin="anonymous" />
+      
+      <!-- Latest compiled and minified JavaScript -->
+      <script
+        src="https://cdn.rtlcss.com/bootstrap/v4.5.3/js/bootstrap.min.js"
+        integrity="sha384-VmD+lKnI0Y4FPvr6hvZRw6xvdt/QZoNHQ4h5k0RL30aGkR9ylHU56BzrE2UoohWK"
+        crossorigin="anonymous"></script>
+        <!-- OPTION 2 -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js" integrity="sha512-s5u/JBtkPg+Ff2WEr49/cJsod95UgLHbC00N/GglqdQuLnYhALncz8ZHiW/LxDRGduijLKzeYb7Aal9h3codZA==" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" integrity="sha512-LT9fy1J8pE4Cy6ijbg96UkExgOjCqcxAC7xsnv+mLJxSvftGVmmc236jlPTZXPcBRQcVOWoK1IJhb1dAjtb4lQ==" crossorigin="anonymous" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/i18n/jquery-ui-timepicker-addon-i18n.min.js" integrity="sha512-t2ZIJH81Sh+SWSb4BuA9en4j6fwja+sYOEXbqoepD9lJ+efUGD94gSWqdmgQchGmPez2ojECq4Fm6bKMUAzIiQ==" crossorigin="anonymous"></script>
+
+      <title>מחשבון הפרשי זמן</title>
+    </head>
+
+    <body class="rtl">
+        <div>
+            לבדיקה
+            </div>
+            <!-- OPTION 1 
+            <div class="form-group">
+              <input class="form-control" name="db1" type="text" data-role="datebox" data-datebox-mode="datetimebox" id="db1">
+          </div>
+          -->
+          <!-- OPTION 2 -->
+            <input id="datepicker">
+                <script type="text/javascript">
+              
+$( function() {
+$.timepicker.regional['he'] = {
+	timeOnlyTitle: 'בחר זמן',
+	timeText: 'זמן',
+	hourText: 'שעה',
+	minuteText: 'דקות',
+	secondText: 'שניות',
+	millisecText: 'מילישניות',
+	timezoneText: 'אזור זמן',
+	currentText: 'עכשיו',
+	closeText: 'סגור',
+	timeFormat: 'HH:mm',
+	amNames: ['AM', 'A'],
+	pmNames: ['PM', 'P'],
+	isRTL: false
+};
+$.timepicker.setDefaults($.timepicker.regional['he']);
+
+
+  $.datepicker.setDefaults( $.datepicker.regional[ "he" ] );
+    $( "#datepicker" ).datetimepicker({
+    	isRTL: true,
+      showButtonPanel: true,
+      timeInput: true,
+      controlType: "select"
+      })
+  } );
+
+                </script>
+            </div>
+        </div>        
+
+    </body>
+</html>
