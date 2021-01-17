@@ -5,11 +5,21 @@
   https://jsfiddle.net/alrotem/bq2c0rtk/33/
 
   https://github.com/alonrotem/DateTimeConverter
+  https://www.flaticon.com/free-icon/marketing_3712929
 -->
 <html>
     <head>
       <meta charset="utf-8"/>
       <meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0" />
+
+      <meta property="og:url"                content="http://alonrotem.github.io/DateTimeConverter/" />
+      <meta property="og:type"               content="article" />
+      <meta property="og:title"              content="מחשבון הפרשי זמן" />
+      <meta property="og:description"        content="לחישוב קל של הפרשי זמן בין מחשבים" />
+      <meta property="og:image"              content="https://raw.githubusercontent.com/alonrotem/DateTimeConverter/main/Logo.png" />
+      <meta property="og:image:width"         content="512" />
+      <meta property="og:image:height"        content="512" />
+
       <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
       <link href="https://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css" rel="stylesheet"/>
       <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -36,21 +46,98 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js" integrity="sha512-s5u/JBtkPg+Ff2WEr49/cJsod95UgLHbC00N/GglqdQuLnYhALncz8ZHiW/LxDRGduijLKzeYb7Aal9h3codZA==" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" integrity="sha512-LT9fy1J8pE4Cy6ijbg96UkExgOjCqcxAC7xsnv+mLJxSvftGVmmc236jlPTZXPcBRQcVOWoK1IJhb1dAjtb4lQ==" crossorigin="anonymous" />
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/i18n/jquery-ui-timepicker-addon-i18n.min.js" integrity="sha512-t2ZIJH81Sh+SWSb4BuA9en4j6fwja+sYOEXbqoepD9lJ+efUGD94gSWqdmgQchGmPez2ojECq4Fm6bKMUAzIiQ==" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+      <style>
+            #titleLogo {
+                height: 25px;
+                margin-left: 10px;
+                /*position: relative;
+                top: -5px;*/
+            }
+            body
+            {
+              direction: rtl;
+              font-size: 12px;
+            }
 
+            h1 {
+                /* Extra small devices (phones, less than 768px) */
+              font-size: 30px;
+            }
+            
+            #remotecomputertimePick
+            {
+              padding: 2px;
+            }
+
+            .tabletitle
+            {
+              font-weight: 700 !important;
+              margin-left: 7px;
+            }
+
+            .dtpicker{
+              border-radius: 5px;
+              width: 170px;
+            }
+      </style>
       <title>מחשבון הפרשי זמן</title>
     </head>
-
-    <body class="rtl">
-        <div>
-            לבדיקה
+    <body class="rtl bg-dark">
+      <div id="main" class="over-all bg-dark text-light">
+        <div class="container"><div class="row justify-content-md-center"><div class="col-lg-7 col-xl-7 col-12">
+        <h1><img id="titleLogo" src="images/logo.png">מחשבון הפרשי זמן</h1>
+        <fieldset class="border p-2">
+          <legend class="w-auto">זמן נוכחי</legend>
+          <div class="container">
+            <div class="row">
+              <div class="tabletitle"><lablel for="currentTime">זמן נוכחי:</lable></div>
+              <div class="font-weight-light" id="currentTime"></div>
             </div>
-            <!-- OPTION 1 
-            <div class="form-group">
-              <input class="form-control" name="db1" type="text" data-role="datebox" data-datebox-mode="datetimebox" id="db1">
+
+            <div class="row">
+              <div class="tabletitle"><lablel for="remoteTime">זמן מחשב מרוחק:</lable></div>
+              <div>
+                <input class="dtpicker d-show" id="remoteTime">
+                <span id="remotecomputertimePick">
+                  <i class="far fa-calendar-alt"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="tabletitle"><lablel for="remoteTime">הפרש זמן:</lable></div>
+              <div id="remotetimeDiff"></div>
+            </div>
+
           </div>
-          -->
-          <!-- OPTION 2 -->
-            <input id="datepicker">
+          
+        </fieldset>
+
+        <fieldset class="border p-2">
+          <legend class="w-auto">חישוב זמן אירוע</legend>
+          <div class="container">
+            <div class="row">
+              <div class="tabletitle"><lablel for="remoteTime">זמן אירוע רשום:</lable></div>
+                <div>
+                  <input class="dtpicker d-show" id="eventTime">
+                  <span id="eventTimePick">
+                    <i class="far fa-calendar-alt"></i>
+                  </span>
+                  </div>
+            </div>
+            
+            <div class="row">
+            <div class="tabletitle"><lablel for="remoteTime">זמן אירוע אמיתי (מחושב):</lable></div>
+              <div id="remotetimeDiff"></div>
+            </div>
+          </div>          
+
+          </div>
+        </fieldset>
+
+          </div>
+      </div></div></div>
                 <script type="text/javascript">
               
 $( function() {
@@ -71,15 +158,132 @@ $.timepicker.regional['he'] = {
 };
 $.timepicker.setDefaults($.timepicker.regional['he']);
 
-
-  $.datepicker.setDefaults( $.datepicker.regional[ "he" ] );
-    $( "#datepicker" ).datetimepicker({
+    $(".dtpicker").datetimepicker({
     	isRTL: true,
       showButtonPanel: true,
       timeInput: true,
-      controlType: "select"
-      })
+      controlType: "select",
+      dateFormat: "יום DD, dd/mm/yy"
+    });
+
+    $("#remotecomputertimePick").click(function(){
+      $("#remoteTime").datepicker("show");
+    });
+
+    $("#eventTimePick").click(function(){
+      $("#eventTime").datepicker("show");
+    });
+
+    showCurrentTime();
   } );
+
+  function dateToHebrewtring(date)
+  {
+    var date = new Date();
+    var h = date.getHours(); // 0 - 23
+    var m = date.getMinutes(); // 0 - 59
+    var s = date.getSeconds(); // 0 - 59
+
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    //s = (s < 10) ? "0" + s : s;
+
+    var hebdate = date.toLocaleDateString("he-HE",  { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+    return hebdate + " " + h + ":" + m;// + ":" + s;
+  }
+
+  function showCurrentTime()
+  {
+    document.getElementById("currentTime").innerText = dateToHebrewtring(new Date());
+    recalculate();
+    setTimeout(showCurrentTime, 1000);
+  }
+
+  function recalculate()
+  {
+    var now = new Date();
+    var remoteComputerTime = $("#remoteTime").datepicker('getDate');
+    
+    if (!remoteComputerTime)
+    {
+      document.getElementById("remotetimeDiff").innerText = "בחר זמן מחשב מרוחק";
+      return;
+    }
+
+    remoteComputerTime.setSeconds(0);
+    now.setSeconds(0);
+    
+    var diffstr = "";
+    var diffdirection = "";
+    var diff = now - remoteComputerTime;
+
+    //get rid of seconds and milliseconds
+    diff = Math.floor(diff/1000/60);
+
+    if(diff < 0)
+    {
+      diffdirection += "מאחר ב";
+      diff *= -1;
+    }
+    else if(diff > 0)
+    {
+      diffdirection += "מפגר ב";
+    }
+    else
+    {
+      document.getElementById("remotetimeDiff").innerText = "אין הבדל זמנים";
+      return;
+    }
+    var appendComma = false;
+    var days = Math.floor(diff /*/ 1000 / 60*/ / 60 / 24);
+    diff -= days /* * 1000 * 60*/ * 60 * 24;
+    var hours = Math.floor(diff /* / 1000 / 60 */  / 60);
+    diff -= hours * 60 /* * 1000 * 60 * 60*/;
+    var minutes = Math.floor(diff /* / 1000 / 60*/);
+    diff -= hours /* * 1000 * 60 */;
+
+    if(days > 0)
+    {
+      diffstr = (days == 1)? "יום אחד" : "-" + days + " ימים";
+    }
+
+    if(hours > 0)
+    {
+      diffstr += (days > 0)? ((minutes > 0)? ", " : " ו") : "";
+      diffstr += (hours == 1)?  "שעה אחת" : ((days > 0) ? "" : "-") + hours + " שעות";
+    }
+    
+    if(minutes > 0)
+    {
+      diffstr += (days+hours > 0)? " ו" : "";
+      diffstr += (minutes == 1)? "דקה אחת" : (((days + hours > 0) ? "-":"") + minutes + " דקות");
+    }
+    document.getElementById("remotetimeDiff").innerText = diffdirection + diffstr;
+  }
+
+    var favicon = "\
+      iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQI\
+      CAgIfAhkiAAAAAlwSFlzAAAAdgAAAHYBTnsmCAAAABl0RVh0U29mdHdh\
+      cmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIdSURBVDiNlZFLSFRRHMZ/\
+      5z5m7szca6g0PtJkICR8BC5aGFIDQjGLMLBC6EGbQDCoZdQmF+XCRVtp\
+      JUopioQLrRSCdKEgRWK2aZckSaM2o456z320mqGBGdBvd77///wO5/uE\
+      /yju85/2f3k4GS931izxKTw6H6eIlGKDoyoHkBeu4TRfBHE8Zm7bO1nL\
+      QddTdvrfIO/2gKodD5CVGzLJtF1BXu44EiDvGfH3D+HFOcTIIGI/k/Nv\
+      Tfg1rs15J0WNrjI2cl9s5O5kW/AqYijJNfZ/2rkWklY1g4m+9EZpTDib\
+      v410ulyz7QCGybe0Rdu72yItitWYtKp5fvUV8Trpd7SUiKnZJYSq0dTY\
+      wIspwaEb3lWqlXIN6M0LJcg5TRVlg4m+lkt1tiXXvwvR0krACKAIgaHZ\
+      VG5Okqy8F9nbZFgUCqZrxK89EfFX+9ullV149nKU0hKTO9fbAfi6rjM0\
+      H5IFS1d0GpSdDX1ucTXPn55d4MvKDwCWPr5F2kIvWLbvcRA2TVlXEzWy\
+      XmeildISk4poGQBNzWdZWfEpCHDg87ZniqqqAFK66LpKQ/1pTlVFAZCO\
+      w5beRCAkUgW/MH5T7AoY6nu/JQdez+TNbCl50DvMzHLQd3WeFAwRIDHt\
+      B6O7hwtnytX6zkY/Mj46SSRiEY7FmVkO+rrhfhjv0RJFAQA3xnzV0Og2\
+      VB7u7LmxzJqiBUMi5QV4PNEtBgD+Af+owZNEbOuaAAAAAElFTkSuQmCC";
+  var docHead = document.getElementsByTagName('head')[0];
+  var faviconlink = document.createElement('link');
+  faviconlink.rel = 'shortcut icon';
+  faviconlink.type = 'image/x-icon';
+  faviconlink.href = 'data:image/png;base64,'+favicon;
+  docHead.appendChild(faviconlink);
 
                 </script>
             </div>
