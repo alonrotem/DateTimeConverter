@@ -19,7 +19,7 @@
       <meta property="og:type"               content="article" />
       <meta property="og:title"              content="מחשבון הפרשי זמן" />
       <meta property="og:description"        content="לחישוב קל של הפרשי זמן בין מחשבים" />
-      <meta property="og:image"              content="https://raw.githubusercontent.com/alonrotem/DateTimeConverter/main/Logo.png" />
+      <meta property="og:image"              content="https://raw.githubusercontent.com/alonrotem/DateTimeConverter/master/docs/imgs/logo.png" />
       <meta property="og:image:width"         content="512" />
       <meta property="og:image:height"        content="512" />
 
@@ -50,6 +50,10 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" integrity="sha512-LT9fy1J8pE4Cy6ijbg96UkExgOjCqcxAC7xsnv+mLJxSvftGVmmc236jlPTZXPcBRQcVOWoK1IJhb1dAjtb4lQ==" crossorigin="anonymous" />
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/i18n/jquery-ui-timepicker-addon-i18n.min.js" integrity="sha512-t2ZIJH81Sh+SWSb4BuA9en4j6fwja+sYOEXbqoepD9lJ+efUGD94gSWqdmgQchGmPez2ojECq4Fm6bKMUAzIiQ==" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
+
+      <link rel="stylesheet" type="text/css" href="style/addtohomescreen.css">
+      <script src="src/addtohomescreen.min.js"></script>
       <style>
             #titleLogo {
                 height: 25px;
@@ -100,7 +104,7 @@
     <body class="rtl bg-dark">
       <div id="main" class="over-all bg-dark text-light">
         <div class="container"><div class="row justify-content-md-center"><div class="col-lg-7 col-xl-7 col-12">
-        <h1><img id="titleLogo" src="images/logo.png">מחשבון הפרשי זמן</h1>
+        <h1><img id="titleLogo" src="imgs/logo.png">מחשבון הפרשי זמן</h1>
         <fieldset class="border p-2">
           <legend class="w-auto">זמן נוכחי</legend>
           <div class="container">
@@ -159,34 +163,7 @@
       
                 <script type="text/javascript">
 
-var deferredPrompt;
-var addBtn = document.querySelector('.add-button');
-addBtn.style.display = 'none';
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent Chrome 67 and earlier from automatically showing the prompt
-  e.preventDefault();
-  // Stash the event so it can be triggered later.
-  deferredPrompt = e;
-  // Update UI to notify the user they can add to home screen
-  addBtn.style.display = 'block';
-
-  addBtn.addEventListener('click', (e) => {
-    // hide our user interface that shows our A2HS button
-    addBtn.style.display = 'none';
-    // Show the prompt
-    deferredPrompt.prompt();
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the A2HS prompt');
-        } else {
-          console.log('User dismissed the A2HS prompt');
-        }
-        deferredPrompt = null;
-      });
-  });
-});
+addToHomescreen();
 
 $( function() {
 $.timepicker.regional['he'] = {
