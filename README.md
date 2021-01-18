@@ -7,5 +7,8 @@ Sorry, this application is hard-coded localized to Hebrew (for now).
 
 ![Screenshot](https://raw.githubusercontent.com/alonrotem/DateTimeConverter/master/Screenshot.png)
 
+## Web-mobile version now available
 
-http://alonrotem.github.io/DateTimeConverter/
+At [alonrotem.github.io/DateTimeConverter](http://alonrotem.github.io/DateTimeConverter/)
+
+![Screenshot](https://raw.githubusercontent.com/alonrotem/DateTimeConverter/master/Screenshot-mobile.png)
