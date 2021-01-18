@@ -157,7 +157,7 @@
 
           </div>
           <div class="row justify-content-md-center">
-            <div class="col-lg-7 col-xl-7 col-12"><button class="add-button">הוסף קיצור לדף הבית</button></div>
+            <div class="col-lg-7 col-xl-7 col-12"><button class="add-button" id="btnAdd">הוסף קיצור לדף הבית</button></div>
           </div>
       </div></div></div>
       
@@ -165,6 +165,7 @@
 
 addToHomescreen();
 
+var btnAdd = document.getElementById("#btnAdd");
 btnAdd.addEventListener('click', (e) => {
   // hide our user interface that shows our A2HS button
   btnAdd.style.display = 'none';
