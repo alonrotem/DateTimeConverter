@@ -163,7 +163,18 @@
       
                 <script type="text/javascript">
 
-addToHomescreen();
+//addToHomescreen();
+var deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  console.log('beforeinstallprompt Event fired');
+  e.preventDefault();
+
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+
+  return false;
+});
 
 var btnAdd = document.getElementById("btnAdd");
 btnAdd.addEventListener('click', (e) => {
