@@ -1,0 +1,15 @@
+{
+    "background_color": "purple",
+    "description": "לחישוב קל של הפרשי זמן בין מחשבים",
+    "display": "fullscreen",
+    "icons": [
+      {
+        "src": "logo.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "name": "מחשבון הפרשי זמן",
+    "short_name": "מחשבון הפרשי זמן",
+    "start_url": "index.html"
+  }
