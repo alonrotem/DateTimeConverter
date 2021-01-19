@@ -121,6 +121,12 @@
             {
               margin-right: -15px;
             }
+
+            .imglink
+            {
+              font-size: 30px;
+              margin: 0px 10px;              
+            }
       </style>
       <title>מחשבון הפרשי זמן</title>
     </head>
@@ -132,7 +138,7 @@
           <legend class="w-auto">זמן נוכחי</legend>
           <div class="container">
 
-
+<div id="section-auto">
             <div class="form-check">
               <input class="form-check-input" type="radio" name="timeDiffRadios" id="timeDiffRadioCalculated" value="timeDiffRadioCalculated" checked>
               <label class="form-check-label" for="timeDiffRadioCalculated">
@@ -161,7 +167,8 @@
               <div class="tabletitle"><lablel for="remoteTime">הפרש זמן:</lable></div>
               <div id="remotetimeDiff"></div>
             </div>
-
+</div>
+<div id="section-manual" class="text-muted">
             <div class="form-check">
               <input class="form-check-input" type="radio" name="timeDiffRadios" id="timeDiffRadioMaunal" value="timeDiffRadioMaunal">
               <label class="form-check-label" for="timeDiffRadioMaunal">
@@ -182,7 +189,7 @@
               <input id="manualDiffMinutes" type="number" class="numberInput" placeholder="0">
               <label for="manualDiffMinutes">דקות</lable>
             </div>            
-
+</div>
           </div>
           </div>
         </fieldset>
@@ -212,9 +219,20 @@
 
           </div>
           <div class="row justify-content-md-center">
-            <div class="col-lg-7 col-xl-7 col-12"><!--<button class="add-button" id="btnAdd">הוסף קיצור לדף הבית</button>--></div>
+            <div class="col-lg-7 col-xl-7 col-12"><div style="text-align: center;">
+              <a class="imglink" title="This project on Github" target="_blank" href="https://github.com/alonrotem/DateTimeConverter"><i class="fab fa-github"></i></a>
+              <a class="imglink" title="My site" target="_blank" href="https://www.alonintheworld.com"><i class="fas fa-globe-europe"></i></a>
+              <a class="imglink" title="My Facebook profile" target="_blank" href="https://www.facebook.com/alrotem/"><i class="fab fa-facebook"></i></a>
+              <a class="imglink" title="My LinkedIn profile" target="_blank" href="https://www.linkedin.com/in/alrotem/"><i class="fab fa-linkedin"></i></a>
+              <a class="imglink" title="My Instagram profile" target="_blank" href="https://www.instagram.com/alrotem/"><i class="fab fa-instagram"></i></a>
+            </div></div>
           </div>
-      </div></div></div>
+
+          
+
+      </div>
+      
+    </div></div>
       
                 <script type="text/javascript">
 
@@ -303,12 +321,17 @@ $.timepicker.setDefaults($.timepicker.regional['he']);
       $("#remoteTime").prop("disabled", !autoMode );
       if(autoMode)
       {
+        $("#section-auto").removeClass("text-muted");
+        $("#section-manual").addClass("text-muted");
         $("#remotecomputertimePick").click(function(){
           $("#remoteTime").datepicker("show");
         });
       }
       else
       {
+        $("#section-auto").addClass("text-muted");
+        $("#section-manual").removeClass("text-muted");
+
         $("#remotecomputertimePick").off();
       }
 
