@@ -89,6 +89,20 @@
               height: 25px;
             }
 
+            .numberInput
+            {
+              border-radius: 5px;
+              width: 40px;
+              height: 25px;
+            }
+
+            .optionselect
+            {
+              border-radius: 5px;
+              width: 75px;
+              height: 24px;
+            }
+
             legend {
               font-size: 15px;
               padding: 0px 6px;
@@ -97,6 +111,15 @@
 
             fieldset .row {
               line-height: 40px;
+            }
+
+            .radio-options-row {
+              padding-right: 20px;
+            }
+
+            .form-check
+            {
+              margin-right: -15px;
             }
       </style>
       <title>מחשבון הפרשי זמן</title>
@@ -108,12 +131,23 @@
         <fieldset class="border p-2">
           <legend class="w-auto">זמן נוכחי</legend>
           <div class="container">
-            <div class="row">
+
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="timeDiffRadios" id="timeDiffRadioCalculated" value="timeDiffRadioCalculated" checked>
+              <label class="form-check-label" for="timeDiffRadioCalculated">
+                הפרש זמן מחושב
+              </label>
+            </div>
+
+
+            <div class="row radio-options-row">
+
               <div class="tabletitle"><lablel for="currentTime">זמן נוכחי:</lable></div>
               <div class="font-weight-light" id="currentTime"></div>
             </div>
 
-            <div class="row">
+            <div class="row radio-options-row">
               <div class="tabletitle"><lablel for="remoteTime">זמן מחשב מרוחק:</lable></div>
               <div>
                 <input class="dtpicker d-show" id="remoteTime">
@@ -123,13 +157,34 @@
               </div>
             </div>
 
-            <div class="row">
+            <div class="row radio-options-row">
               <div class="tabletitle"><lablel for="remoteTime">הפרש זמן:</lable></div>
               <div id="remotetimeDiff"></div>
             </div>
 
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="timeDiffRadios" id="timeDiffRadioMaunal" value="timeDiffRadioMaunal">
+              <label class="form-check-label" for="timeDiffRadioMaunal">
+                הפרש זמן ידני
+              </label>
+            </div>
+
+            <div class="row radio-options-row">
+            <div>
+              <select class="optionselect" id="manualDiffDirection">
+                <option value="later" selected>מאחר ב-</option>
+                <option value="earlier">מפגר ב-</option>
+              </select>
+              <input id="manualDiffDays" type="number" class="numberInput" placeholder="0">
+              <label for="manualDiffDays">ימים, </lable>
+              <input id="manualDiffHours" type="number" class="numberInput" placeholder="0">
+              <label for="manualDiffHours">שעות, </lable>
+              <input id="manualDiffMinutes" type="number" class="numberInput" placeholder="0">
+              <label for="manualDiffMinutes">דקות</lable>
+            </div>            
+
           </div>
-          
+          </div>
         </fieldset>
 
         <fieldset class="border p-2">
@@ -224,16 +279,41 @@ $.timepicker.setDefaults($.timepicker.regional['he']);
       dateFormat: "יום DD, dd/mm/yy"
     });
 
-    $("#remotecomputertimePick").click(function(){
-      $("#remoteTime").datepicker("show");
-    });
+
 
     $("#eventTimePick").click(function(){
       $("#eventTime").datepicker("show");
     });
 
+    $('input:radio[name="timeDiffRadios"]').change(function() {
+      setFormOptionsByMode();
+    });
+
+    setFormOptionsByMode();
     showCurrentTime();
-  } );
+  });
+
+  function setFormOptionsByMode()
+  {
+    var autoMode = ($('input:radio[name="timeDiffRadios"]:checked').val() == "timeDiffRadioCalculated");
+      $("#manualDiffDays").prop("disabled", autoMode);
+      $("#manualDiffHours").prop("disabled", autoMode);
+      $("#manualDiffMinutes").prop("disabled", autoMode);
+      $("#manualDiffDirection").prop("disabled", autoMode);
+      $("#remoteTime").prop("disabled", !autoMode );
+      if(autoMode)
+      {
+        $("#remotecomputertimePick").click(function(){
+          $("#remoteTime").datepicker("show");
+        });
+      }
+      else
+      {
+        $("#remotecomputertimePick").off();
+      }
+
+      showCurrentTime();
+  }
 
   function dateToHebrewtring(date)
   {
@@ -259,88 +339,119 @@ $.timepicker.setDefaults($.timepicker.regional['he']);
 
   function recalculate()
   {
+    var autoMode = ($('input:radio[name="timeDiffRadios"]:checked').val() == "timeDiffRadioCalculated");
+    var diffInMinutes = 0;
     var now = new Date();
     var remoteComputerTime = $("#remoteTime").datepicker('getDate');
     var eventComputerTime = $("#eventTime").datepicker('getDate');
     var calculatedEventTime = new Date();
 
-    if (!remoteComputerTime)
+    if(autoMode)
     {
-      document.getElementById("remotetimeDiff").innerText = "בחר זמן מחשב מרוחק";
-      document.getElementById("eventTimeCalculate").innerText = "בחר זמן מחשב מרוחק";
+      if (!remoteComputerTime)
+      {
+        document.getElementById("remotetimeDiff").innerText = "בחר זמן מחשב מרוחק";
+        document.getElementById("eventTimeCalculate").innerText = "בחר זמן מחשב מרוחק";
+      }
+      else
+      {
+        //get rid of seconds and milliseconds
+        remoteComputerTime.setSeconds(0);
+        remoteComputerTime.setMicroseconds(0)
+        now.setSeconds(0);
+        now.setMicroseconds(0);
+        if(eventComputerTime)
+        {
+          eventComputerTime.setSeconds(0);
+          eventComputerTime.setMicroseconds(0);      
+        }
+
+        var diffstr = "";
+        var diffdirection = "";
+        diffInMinutes = now - remoteComputerTime;
+
+        //Convert to minutes
+        diffInMinutes = Math.floor(diffInMinutes/1000/60);
+
+        if(diffInMinutes < 0)
+        {
+          diffdirection += "מאחר ב";
+        }
+        else if(diffInMinutes > 0)
+        {
+          diffdirection += "מפגר ב";
+        }
+        else
+        {
+          document.getElementById("remotetimeDiff").innerText = "אין הבדל זמנים";
+          if(eventComputerTime)
+            document.getElementById("eventTimeCalculate").innerText = dateToHebrewtring(eventComputerTime);
+          return;
+        }
+        var absdiff = Math.abs(diffInMinutes);
+        var appendComma = false;
+        var days = Math.floor(absdiff /*/ 1000 / 60*/ / 60 / 24);
+        absdiff -= days /* * 1000 * 60*/ * 60 * 24;
+        var hours = Math.floor(absdiff /* / 1000 / 60 */  / 60);
+        absdiff -= hours * 60 /* * 1000 * 60 * 60*/;
+        var minutes = Math.floor(absdiff /* / 1000 / 60*/);
+        absdiff -= hours /* * 1000 * 60 */;
+
+        if(days > 0)
+        {
+          diffstr = (days == 1)? "יום אחד" : "-" + days + " ימים";
+        }
+
+        if(hours > 0)
+        {
+          diffstr += (days > 0)? ((minutes > 0)? ", " : " ו") : "";
+          diffstr += (hours == 1)?  "שעה אחת" : ((days > 0) ? "" : "-") + hours + " שעות";
+        }
+        
+        if(minutes > 0)
+        {
+          diffstr += (days+hours > 0)? " ו" : "";
+          diffstr += (minutes == 1)? "דקה אחת" : (((days + hours > 0) ? "-":"") + minutes + " דקות");
+        }
+        document.getElementById("remotetimeDiff").innerText = diffdirection + diffstr;
+      }
     }
     else
     {
-      //get rid of seconds and milliseconds
-      remoteComputerTime.setSeconds(0);
-      remoteComputerTime.setMicroseconds(0)
-      now.setSeconds(0);
-      now.setMicroseconds(0);
-      if(eventComputerTime)
+      calculatedEventTime = eventComputerTime;
+      var direction = $("#manualDiffDirection").val();
+      diffInMinutes = readNum($("#manualDiffMinutes").val());
+      diffInMinutes += readNum($("#manualDiffHours").val()) * 60;
+      diffInMinutes += readNum($("#manualDiffDays").val()) * 60 * 24;
+      if(direction == "later")
       {
-        eventComputerTime.setSeconds(0);
-        eventComputerTime.setMicroseconds(0);      
-      }
-
-      var diffstr = "";
-      var diffdirection = "";
-      var diffInMinutes = now - remoteComputerTime;
-
-      //Convert to minutes
-      diffInMinutes = Math.floor(diffInMinutes/1000/60);
-
-      if(diffInMinutes < 0)
-      {
-        diffdirection += "מאחר ב";
-      }
-      else if(diffInMinutes > 0)
-      {
-        diffdirection += "מפגר ב";
-      }
-      else
-      {
-        document.getElementById("remotetimeDiff").innerText = "אין הבדל זמנים";
-        if(eventComputerTime)
-          document.getElementById("eventTimeCalculate").innerText = dateToHebrewtring(eventComputerTime);
-        return;
-      }
-      var absdiff = Math.abs(diffInMinutes);
-      var appendComma = false;
-      var days = Math.floor(absdiff /*/ 1000 / 60*/ / 60 / 24);
-      absdiff -= days /* * 1000 * 60*/ * 60 * 24;
-      var hours = Math.floor(absdiff /* / 1000 / 60 */  / 60);
-      absdiff -= hours * 60 /* * 1000 * 60 * 60*/;
-      var minutes = Math.floor(absdiff /* / 1000 / 60*/);
-      absdiff -= hours /* * 1000 * 60 */;
-
-      if(days > 0)
-      {
-        diffstr = (days == 1)? "יום אחד" : "-" + days + " ימים";
-      }
-
-      if(hours > 0)
-      {
-        diffstr += (days > 0)? ((minutes > 0)? ", " : " ו") : "";
-        diffstr += (hours == 1)?  "שעה אחת" : ((days > 0) ? "" : "-") + hours + " שעות";
-      }
-      
-      if(minutes > 0)
-      {
-        diffstr += (days+hours > 0)? " ו" : "";
-        diffstr += (minutes == 1)? "דקה אחת" : (((days + hours > 0) ? "-":"") + minutes + " דקות");
-      }
-      document.getElementById("remotetimeDiff").innerText = diffdirection + diffstr;
-
-      if(!eventComputerTime)
-      {
-        document.getElementById("eventTimeCalculate").innerText = "בחר זמן אירוע";
-      }
-      else
-      {
-        calculatedEventTime.setMinutes(eventComputerTime.getMinutes() + diffInMinutes);
-        document.getElementById("eventTimeCalculate").innerText = dateToHebrewtring(calculatedEventTime);
+        diffInMinutes *= -1;
       }
     }
+
+    if(!eventComputerTime)
+    {
+      document.getElementById("eventTimeCalculate").innerText = "בחר זמן אירוע";
+    }
+    else
+    {
+      calculatedEventTime.setMinutes(eventComputerTime.getMinutes() + diffInMinutes);
+      document.getElementById("eventTimeCalculate").innerText = dateToHebrewtring(calculatedEventTime);
+    }
+  }
+
+  function readNum(value)
+  {
+    if(!value)
+    {
+      return 0;
+    }
+    var n = parseInt(value);
+    if(n && isNaN(n))
+    {
+      return 0;
+    }
+    return n;
   }
 
     var favicon = "\
