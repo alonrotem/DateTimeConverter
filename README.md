@@ -12,3 +12,8 @@ Sorry, this application is hard-coded localized to Hebrew (for now).
 At [alonrotem.github.io/DateTimeConverter](http://alonrotem.github.io/DateTimeConverter/)
 
 ![Screenshot](https://raw.githubusercontent.com/alonrotem/DateTimeConverter/master/Screenshot-mobile.png)
+
+## Excel version now available
+At [DateTimeConverter.xlsx](https://github.com/alonrotem/DateTimeConverter/blob/master/DateTimeConverter.xlsx?raw=true)
+
+![Screenshot](https://raw.githubusercontent.com/alonrotem/DateTimeConverter/master/Screenshot-excel.png)
