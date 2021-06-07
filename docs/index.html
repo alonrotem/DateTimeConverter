@@ -87,6 +87,7 @@
               border-radius: 5px;
               width: 170px;
               height: 25px;
+              padding: 0 !important;
             }
 
             .numberInput
@@ -180,7 +181,7 @@
             <div>
               <select class="optionselect" id="manualDiffDirection">
                 <option value="later" selected>מאחר ב-</option>
-                <option value="earlier">מפגר ב-</option>
+                <option value="earlier">מקדים ב-</option>
               </select>
               <input id="manualDiffDays" type="number" class="numberInput" placeholder="0">
               <label for="manualDiffDays">ימים, </lable>
@@ -402,7 +403,7 @@ $.timepicker.setDefaults($.timepicker.regional['he']);
         }
         else if(diffInMinutes > 0)
         {
-          diffdirection += "מפגר ב";
+          diffdirection += "מקדים ב";
         }
         else
         {
