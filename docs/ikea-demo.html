@@ -1,0 +1,65 @@
+<!DOCTYPE html> 
+<html> 
+<body> 
+
+<video id="ikeavideo" width="400" controls autoplay>
+  <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4">
+  Your browser does not support HTML video.
+</video>
+
+<script>
+  var chapters = [
+      {
+          label: "Beginning",
+          time: 0
+        },
+        {
+          label: "Parts & tools",
+            time: 9
+        },
+        {
+          label: "Making the drawer",
+            time: 33
+        },
+        {
+          label: "Making the table",
+            time: 87
+        },
+        {
+          label: "Putting it all together",
+            time: 279
+        },
+        {
+          label: "Design options",
+            time: 304
+        }        
+    ]
+    //alert(chapters["beginning"].label)
+  for (var c=0; c < chapters.length; c++)
+    {
+      var a = document.createElement('a');
+      var linkText = document.createTextNode(chapters[c].label);
+      a.appendChild(linkText);
+      a.title = chapters[c].label;
+      a.href = "javascript:void(0)";
+      a.setAttribute('onclick', 'javascript:document.getElementById("ikeavideo").currentTime = ' + chapters[c].time + ';');
+      document.body.appendChild(a);    
+    }
+
+var elem = document.getElementById("ikeavideo");
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+openFullscreen();
+
+</script>
+
+</body> 
+</html>
