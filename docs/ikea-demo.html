@@ -1,11 +1,83 @@
 <!DOCTYPE html> 
 <html> 
+<head>
+  <style>
+    body
+    {
+      margin:  0;
+    }
+    #wrapper {
+      display: grid;
+      height: auto;
+      grid-template-columns: auto 150px;
+      grid-template-rows: 20px auto;      
+    }
+    #ikeavideo
+    {
+      width:  100% !important; 
+      height: 100% !important;
+        grid-row-start: 1;
+        grid-row-end: 3; 
+    grid-column-start: 1;
+    grid-column-end: 3;        
+    }
+    #overlay
+    {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    z-index: 1000;
+    /* background-color: lightyellow; */
+    /* opacity: 0.5; */
+    background: rgba(0, 0, 0, 0.5);
+    }
+    #chaptersbutton
+    {
+      grid-row-start: 1;
+      grid-column-start: 2;
+background-color: yellow;
+    margin-right: 0;
+    margin-left: auto;
+    z-index: 1000; 
+    }
+    #chaptercontainer
+    {
+      grid-row-start: 2;
+      grid-column-start: 2;      
+    }
+    #chapterslist
+    {
+
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      position: relative;
+      height: 100%;
+      right: -150px;
+      transition-property: right;
+      transition-duration: 0.5s;
+      transition-timing-function: ease-in-out;
+    }
+    .shown
+    {
+      right: 0px !important;
+    }
+  </style>
+</head>
 <body> 
 
-<video id="ikeavideo" width="400" controls autoplay>
-  <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4">
-  Your browser does not support HTML video.
-</video>
+<div id="wrapper">
+  <video id="ikeavideo" width="100%" style="" controls autoplay>
+    <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4">
+    Your browser does not support HTML video.
+  </video>
+  <!--<div id="overlay">-->
+    <div id="chaptersbutton">Button</div>
+    <div id="chaptercontainer">
+    <div id="chapterslist">
+      
+    </div>
+    </div>
+  <!--</div>-->
+</div>
 
 <script>
   var chapters = [
@@ -35,30 +107,23 @@
         }        
     ]
     //alert(chapters["beginning"].label)
+  var chapterslist = document.getElementById("chapterslist");
   for (var c=0; c < chapters.length; c++)
     {
+      var chapterdiv=document.createElement('div');
+
       var a = document.createElement('a');
       var linkText = document.createTextNode(chapters[c].label);
       a.appendChild(linkText);
       a.title = chapters[c].label;
       a.href = "javascript:void(0)";
       a.setAttribute('onclick', 'javascript:document.getElementById("ikeavideo").currentTime = ' + chapters[c].time + ';');
-      document.body.appendChild(a);    
+      chapterdiv.appendChild(a);
+
+      chapterslist.appendChild(chapterdiv);
     }
-
-var elem = document.getElementById("ikeavideo");
-function openFullscreen() {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Safari */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE11 */
-    elem.msRequestFullscreen();
-  }
-}
-
-openFullscreen();
-
+    var chaptersbutton = document.getElementById("chaptersbutton");
+    chaptersbutton.setAttribute('onclick', 'javascript: document.getElementById("chapterslist").classList.toggle("shown");'); //el.classList.toggle('active');
 </script>
 
 </body> 
