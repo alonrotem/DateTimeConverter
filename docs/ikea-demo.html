@@ -1,35 +1,53 @@
 <!DOCTYPE html> 
 <html> 
 <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script
+    src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+    integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+    crossorigin="anonymous"></script>
+    <script>
+  
+  </script>
   <style>
     body
     {
-      margin:  0;
+      background-color:aqua; 
+      overflow: hidden;
     }
-    #wrapper {
-      display: grid;
-      height: auto;
-      grid-template-columns: auto 150px;
-      grid-template-rows: 20px auto;      
-    }
-    #ikeavideo
+    *
     {
-      width:  100% !important; 
-      height: 100% !important;
-        grid-row-start: 1;
-        grid-row-end: 3; 
-    grid-column-start: 1;
-    grid-column-end: 3;        
+        margin:0;
+        padding:0;
     }
-    #overlay
+
+    #videowrapper
     {
-    grid-row-start: 1;
-    grid-column-start: 2;
-    z-index: 1000;
-    /* background-color: lightyellow; */
-    /* opacity: 0.5; */
-    background: rgba(0, 0, 0, 0.5);
+        width: 100vw; 
+        height: 56.25vw; /* 100/56.25 = 1.778 */
+        background: pink;
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16/9 = 1.778 */
+        margin: auto;
+        position: absolute;
+        top:0;bottom:0; /* vertical center */
+        left:0;right:0; /* horizontal center */
+
+        display: grid;
+        /*height: auto;*/
+        grid-template-columns: auto 150px;
+        grid-template-rows: 20px auto;   
+
     }
+
+    #videowrapper video
+    {
+      grid-row-start: 1;
+      grid-row-end: 3; 
+      grid-column-start: 1;
+      grid-column-end: 3;           
+    }
+
     #chaptersbutton
     {
       grid-row-start: 1;
@@ -39,92 +57,140 @@ background-color: yellow;
     margin-left: auto;
     z-index: 1000; 
     }
+
     #chaptercontainer
     {
       grid-row-start: 2;
-      grid-column-start: 2;      
+      grid-column-start: 2;
+      z-index: 2000;
+      display: none;
     }
     #chapterslist
     {
 
       background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      position: relative;
+      
       height: 100%;
+      float: right;
+      /*position: relative;
+      
       right: -150px;
+      */
+      /*
       transition-property: right;
       transition-duration: 0.5s;
       transition-timing-function: ease-in-out;
+      */
+      display: none;
+      z-index: 0;
     }
     .shown
     {
       right: 0px !important;
+      display: block;
+      z-index: 2000;
     }
+
   </style>
 </head>
-<body> 
+<body style=""> 
+		<!-- source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4" -->
 
-<div id="wrapper">
-  <video id="ikeavideo" width="100%" style="" controls autoplay>
-    <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4">
-    Your browser does not support HTML video.
-  </video>
-  <!--<div id="overlay">-->
-    <div id="chaptersbutton">Button</div>
-    <div id="chaptercontainer">
-    <div id="chapterslist">
+    <div id="videowrapper">
+      <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/d3sA5plF6kE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+      <video id="ikeavideo" width="100%"  controls autoplay="true">
+        <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4">
+        Your browser does not support HTML video.
+      </video>
+      <div id='controls'>
+        <progress id='progress-bar' min='0' max='100' value='0'>0% played</progress>
+        <button id='btnReplay' class='replay' title='replay' accesskey="R" onclick='replayVideo();'>Replay</button>	
+        <button id='btnPlayPause' class='play' title='play' accesskey="P" onclick='playPauseVideo();'>Play</button>
+        <button id='btnStop' class='stop' title='stop' accesskey="X" onclick='stopVideo();'>Stop</button>
+        <input type="range" id="volume-bar" title="volume" min="0" max="1" step="0.1" value="1">
+        <button id='btnMute' class='mute' title='mute' onclick='muteVolume();'>Mute</button>	
+        <!--<button id='btnFullScreen' class='fullscreen' title='toggle full screen' accesskey="T" onclick='toggleFullScreen();'>[&nbsp;&nbsp;]</button>-->
+      </div>
+
+
+      <div id="chaptersbutton">Button</div>
+      <div id="chaptercontainer">
+        <div id="chapterslist">
+          
+        </div>
+      </div>
+
+      </div>
+
+      <div style="position:fixed; z-index:9000; top:0; right:500; background-color:chartreuse;" id="fullscreener">EXPERIMENT</div>
+
+      <script>
+        var chapters = [
+            {
+                label: "Beginning",
+                time: 0
+              },
+              {
+                label: "Parts & tools",
+                  time: 9
+              },
+              {
+                label: "Making the drawer",
+                  time: 33
+              },
+              {
+                label: "Making the table",
+                  time: 87
+              },
+              {
+                label: "Putting it all together",
+                  time: 279
+              },
+              {
+                label: "Design options",
+                  time: 304
+              }        
+          ]
+          
+          function toggleChapterList()
+          {
+            var chapterlist = $('#chapterslist');
+            var chaptercontainer = $("#chaptercontainer");
+            if (chapterlist.is(":visible"))
+            {
+              chapterlist.hide('slide', {direction: 'right'}, 400, function (){ chaptercontainer.hide(); });
+              
+            }
+            else
+            {
+              chaptercontainer.show();
+              chapterlist.show('slide', {direction: 'right'}, 400);
+            }  
       
-    </div>
-    </div>
-  <!--</div>-->
-</div>
+          }
+          //alert(chapters["beginning"].label)
+        var chapterslist = document.getElementById("chapterslist");
+        for (var c=0; c < chapters.length; c++)
+          {
+            var chapterdiv=document.createElement('div');
+      
+            var a = document.createElement('a');
+            var linkText = document.createTextNode(chapters[c].label);
+            a.appendChild(linkText);
+            a.title = chapters[c].label;
+            a.href = "javascript:void(0)";
+            a.setAttribute('onclick', 'javascript:document.getElementById("ikeavideo").currentTime = ' + chapters[c].time + ';');
+            chapterdiv.appendChild(a);
+      
+            chapterslist.appendChild(chapterdiv);
+          }
+          var chaptersbutton = document.getElementById("chaptersbutton");
+          chaptersbutton.setAttribute('onclick', 'javascript: toggleChapterList();'); //el.classList.toggle('active');
 
-<script>
-  var chapters = [
-      {
-          label: "Beginning",
-          time: 0
-        },
-        {
-          label: "Parts & tools",
-            time: 9
-        },
-        {
-          label: "Making the drawer",
-            time: 33
-        },
-        {
-          label: "Making the table",
-            time: 87
-        },
-        {
-          label: "Putting it all together",
-            time: 279
-        },
-        {
-          label: "Design options",
-            time: 304
-        }        
-    ]
-    //alert(chapters["beginning"].label)
-  var chapterslist = document.getElementById("chapterslist");
-  for (var c=0; c < chapters.length; c++)
-    {
-      var chapterdiv=document.createElement('div');
 
-      var a = document.createElement('a');
-      var linkText = document.createTextNode(chapters[c].label);
-      a.appendChild(linkText);
-      a.title = chapters[c].label;
-      a.href = "javascript:void(0)";
-      a.setAttribute('onclick', 'javascript:document.getElementById("ikeavideo").currentTime = ' + chapters[c].time + ';');
-      chapterdiv.appendChild(a);
-
-      chapterslist.appendChild(chapterdiv);
-    }
-    var chaptersbutton = document.getElementById("chaptersbutton");
-    chaptersbutton.setAttribute('onclick', 'javascript: document.getElementById("chapterslist").classList.toggle("shown");'); //el.classList.toggle('active');
-</script>
+          var fsc = document.getElementById("fullscreener");
+          fsc.onclick = function() { var wrapp = document.getElementById("videowrapper"); wrapp.requestFullscreen(); }
+      </script>
 
 </body> 
 </html>
