@@ -25,10 +25,10 @@
     #videowrapper
     {
         width: 100vw; 
-        height: 56.25vw; /* 100/56.25 = 1.778 */
+        /*height: 56.25vw; /* 100/56.25 = 1.778 */
         background: pink;
         max-height: 100vh;
-        max-width: 177.78vh; /* 16/9 = 1.778 */
+        /*max-width: 177.78vh; /* 16/9 = 1.778 */
         margin: auto;
         position: absolute;
         top:0;bottom:0; /* vertical center */
@@ -116,6 +116,16 @@ background-color: yellow;
       <div style="position:fixed; z-index:9000; top:0; right:500; background-color:chartreuse;" id="fullscreener">EXPERIMENT</div>
 
       <script>
+var viewportHeight = window.screen.height * window.devicePixelRatio;//window.innerHeight;
+var viewportWidth =  window.screen.width * window.devicePixelRatio; //window.innerWidth;
+
+//alert("viewportHeight("+viewportHeight+")/viewportWidth("+viewportWidth+")=" + (viewportHeight*100/viewportWidth) + " :: " + "viewportWidth("+viewportWidth+")/viewportHeight("+viewportHeight+")=" + (viewportWidth*100/viewportHeight));
+var vwap = document.getElementById("videowrapper");
+
+vwap.style.height = (viewportHeight*100/viewportWidth) + "vw"/* 100/56.25 = 1.778 */
+vwap.style.maxWidth = (viewportWidth*100/viewportHeight) + "vh"; /* 16/9 = 1.778 */
+
+
         var chapters = [
             {
                 label: "Beginning",
