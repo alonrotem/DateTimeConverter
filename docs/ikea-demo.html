@@ -116,8 +116,8 @@ background-color: yellow;
       <div style="position:fixed; z-index:9000; top:0; right:500; background-color:chartreuse;" id="fullscreener">EXPERIMENT</div>
 
       <script>
-var viewportHeight = window.screen.height * window.devicePixelRatio;//window.innerHeight;
-var viewportWidth =  window.screen.width * window.devicePixelRatio; //window.innerWidth;
+var viewportHeight = window.screen.height //* window.devicePixelRatio;//window.innerHeight;
+var viewportWidth =  window.screen.width //* window.devicePixelRatio; //window.innerWidth;
 
 alert("videowrapper.style.height = " + (viewportHeight*100/viewportWidth).toFixed(2) + "vw; videowrapper.style.maxWidth = " + (viewportWidth*100/viewportHeight).toFixed(2) + "vh");
 var vwap = document.getElementById("videowrapper");
