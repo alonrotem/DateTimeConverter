@@ -119,11 +119,11 @@ background-color: yellow;
 var viewportHeight = window.screen.height * window.devicePixelRatio;//window.innerHeight;
 var viewportWidth =  window.screen.width * window.devicePixelRatio; //window.innerWidth;
 
-//alert("viewportHeight("+viewportHeight+")/viewportWidth("+viewportWidth+")=" + (viewportHeight*100/viewportWidth) + " :: " + "viewportWidth("+viewportWidth+")/viewportHeight("+viewportHeight+")=" + (viewportWidth*100/viewportHeight));
+alert("videowrapper.style.height = " + (viewportHeight*100/viewportWidth).toFixed(2) + "vw; videowrapper.style.maxWidth = " + (viewportWidth*100/viewportHeight).toFixed(2) + "vh");
 var vwap = document.getElementById("videowrapper");
 
-vwap.style.height = (viewportHeight*100/viewportWidth) + "vh"/* 100/56.25 = 1.778 */
-vwap.style.maxWidth = (viewportWidth*100/viewportHeight) + "vw"; /* 16/9 = 1.778 */
+vwap.style.height = (viewportHeight*100/viewportWidth).toFixed(2) + "vw";/* 100/56.25 = 1.778 */
+vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; /* 16/9 = 1.778 */
 
 
         var chapters = [
