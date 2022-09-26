@@ -2,6 +2,7 @@
 <html> 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="imgs/ikea.png">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <script
     src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
@@ -13,7 +14,7 @@
   <style>
     body
     {
-      background-color:aqua; 
+      /*background-color:aqua;*/ 
       overflow: hidden;
     }
     *
@@ -25,10 +26,10 @@
     #videowrapper
     {
         width: 100vw; 
-        /*height: 56.25vw; /* 100/56.25 = 1.778 */
-        background: pink;
+        height: 56.25vw; /* 100/56.25 = 1.778 */
+        /*background: pink;*/
         max-height: 100vh;
-        /*max-width: 177.78vh; /* 16/9 = 1.778 */
+        max-width: 177.78vh; /* 16/9 = 1.778 */
         margin: auto;
         position: absolute;
         top:0;bottom:0; /* vertical center */
@@ -36,8 +37,8 @@
 
         display: grid;
         /*height: auto;*/
-        grid-template-columns: auto 150px;
-        grid-template-rows: 20px auto;   
+        grid-template-columns: auto 250px;
+        grid-template-rows: 75px auto;   
 
     }
 
@@ -53,10 +54,11 @@
     {
       grid-row-start: 1;
       grid-column-start: 2;
-background-color: yellow;
+/*background-color: yellow;*/
     margin-right: 0;
     margin-left: auto;
-    z-index: 1000; 
+    z-index: 1000;
+    cursor:pointer;
     }
 
     #chaptercontainer
@@ -85,6 +87,22 @@ background-color: yellow;
       display: none;
       z-index: 0;
     }
+    #chapterslist div
+    {
+
+    padding: 5px;
+    margin: 5px;
+    }
+
+    #chapterslist div a
+    {
+
+    font-family: arial;
+    color: white;
+    text-decoration: none;
+
+    }
+
     .shown
     {
       right: 0px !important;
@@ -99,12 +117,14 @@ background-color: yellow;
 
     <div id="videowrapper">
       <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/d3sA5plF6kE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
-      <video id="ikeavideo" width="100%"  controls autoplay="true">
+      <video id="ikeavideo" width="100%"  controls autoplay="autoplay">
         <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4">
         Your browser does not support HTML video.
       </video>
 
-      <div id="chaptersbutton">Button</div>
+      <div id="chaptersbutton">
+        <img src="imgs/list-light.png" />
+      </div>
       <div id="chaptercontainer">
         <div id="chapterslist">
           
@@ -113,17 +133,19 @@ background-color: yellow;
 
       </div>
 
-      <div style="position:fixed; z-index:9000; top:0; right:500; background-color:chartreuse;" id="fullscreener">EXPERIMENT</div>
+      <!--<div style="position:fixed; z-index:9000; top:0; right:500; background-color:chartreuse;" id="fullscreener">EXPERIMENT</div>-->
 
       <script>
+        /*
 var viewportHeight = window.screen.height //* window.devicePixelRatio;//window.innerHeight;
 var viewportWidth =  window.screen.width //* window.devicePixelRatio; //window.innerWidth;
 
 alert("videowrapper.style.height = " + (viewportHeight*100/viewportWidth).toFixed(2) + "vw; videowrapper.style.maxWidth = " + (viewportWidth*100/viewportHeight).toFixed(2) + "vh");
 var vwap = document.getElementById("videowrapper");
 
-vwap.style.height = (viewportHeight*100/viewportWidth).toFixed(2) + "vw";/* 100/56.25 = 1.778 */
-vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; /* 16/9 = 1.778 */
+vwap.style.height = (viewportHeight*100/viewportWidth).toFixed(2) + "vw";//* 100/56.25 = 1.778
+vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 16/9 = 1.778 
+*/
 
 
         var chapters = [
@@ -188,9 +210,10 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; /* 1
           var chaptersbutton = document.getElementById("chaptersbutton");
           chaptersbutton.setAttribute('onclick', 'javascript: toggleChapterList();'); //el.classList.toggle('active');
 
-
+          /*
           var fsc = document.getElementById("fullscreener");
           fsc.onclick = function() { var wrapp = document.getElementById("videowrapper"); wrapp.requestFullscreen(); }
+          */
       </script>
 
 </body> 
