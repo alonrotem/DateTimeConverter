@@ -326,6 +326,15 @@ Fix horizontal alignment of play/chapters
     padding: 10px;
     }
 
+    #previouslink, #nextlink
+    {
+      -webkit-touch-callout: none; /* Safari */
+        -webkit-user-select: none; /* Chrome */     
+           -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; 
+    }
+
   </style>
 </head>
 <body> 
@@ -439,6 +448,19 @@ else
 
   previouslink.onclick = function(){ var info = getChapters(); if(info.previouslinktime > -1) { ikeavideo.currentTime =  info.previouslinktime } };
   nextlink.onclick = function(){ var info = getChapters(); if(info.nextlinktime > -1) { ikeavideo.currentTime =  info.nextlinktime } };
+
+  //#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *
+  var autohideselector = "#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *";
+  $(document).on("touchend click", function(){
+    $ (autohideselector).show();
+    hideMenu(); //hide again after 2 seconds
+  });
+
+  function hideMenu(){
+    setTimeout( function(){
+      $ (autohideselector).fadeOut(1500);
+    }, 4000);
+}
 
   customfullscreen.onclick = function(){
     //videowrapper.requestFullscreen();
