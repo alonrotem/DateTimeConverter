@@ -74,7 +74,7 @@ Fix horizontal alignment of play/chapters
 
     }
 
-    #videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *
+    #videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *, #videowrapper #prevlinkBtn.visiblenav
     {
       visibility: hidden;
       opacity: 0;
@@ -85,7 +85,7 @@ Fix horizontal alignment of play/chapters
             transition: opacity 1s ease-in-out;
     }
 
-    #videowrapper:hover .custom-control, #videowrapper:hover #logo, #videowrapper:hover #playnav, #videowrapper:hover .visiblenav, #videowrapper:hover .visiblenav *
+    #videowrapper:hover .custom-control, #videowrapper:hover #logo, #videowrapper:hover #playnav, #videowrapper:hover .visiblenav, #videowrapper:hover .visiblenav *, #videowrapper:hover #prevlinkBtn.visiblenav
     {
       visibility:visible;
       opacity: 1;
@@ -361,9 +361,9 @@ Fix horizontal alignment of play/chapters
         <div class="custom-control"><i class="fa-solid fa-minimize"></i></div>-->
 
         <div id="playnav">
-        <div style="width:50%; text-align: center;"><div class="custom-contro" id="previouslink"  style="background-color: yellow; display:inline-block; padding:5px; cursor: pointer;"><i class="fa-solid fa-backward-step"></i><span id="prevlinkText" style="margin-left: 5px;"><!--PREVIOUS--></span></div></div>
+        <div style="width:50%; text-align: center;"><div class="custom-contro" id="previouslink"  style="background-color: yellow; display:inline-block; padding:5px; cursor: pointer;"><i  id="prevlinkBtn" class="fa-solid fa-backward-step" style="padding:7px;"></i><span id="prevlinkText"><!--PREVIOUS--></span></div></div>
         <div id="customplaypause" class="custom-control"><i id="playbutton" class="fa-solid fa-pause"></i></div>
-        <div  style="width:50%; text-align: center;"><div class="custom-contro" id="nextlink" style="background-color: yellow; display:inline-block; padding:5px; cursor: pointer;"><span id="nextlinkText" style="margin-right: 5px;"><!--Next--></span><i class="fa-solid fa-forward-step"></i></div></div>
+        <div  style="width:50%; text-align: center;"><div class="custom-contro" id="nextlink" style="background-color: yellow; display:inline-block; padding:5px; cursor: pointer;"><span id="nextlinkText"><!--Next--></span><i id="nextlinkBtn" class="fa-solid fa-forward-step"  style="padding:7px;"></i></div></div>
         </div>
 
 
@@ -432,6 +432,8 @@ else
   var prevlinkText = document.getElementById("prevlinkText");
   var nextlink = document.getElementById("nextlink");
   var nextlinkText = document.getElementById("nextlinkText");
+  var prevlinkBtn = document.getElementById("prevlinkBtn");
+  var nextlinkBtn = document.getElementById("nextlinkBtn");
 
   var speed05 = document.getElementById("speed05");
   var speed10 = document.getElementById("speed10");
@@ -451,7 +453,7 @@ else
 
   //#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *
   var autohideselector = "#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *";
-  $(document).on("touchend click", function(){
+  $(document).on("touchend", function(){
     $ (autohideselector).show();
     hideMenu(); //hide again after 2 seconds
   });
@@ -611,26 +613,33 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 
             
             var cpt = getChapters();
             currentchapterindicator.textContent = cpt.current;
+            /*
             prevlinkText.textContent = cpt.previous;
             nextlinkText.textContent = cpt.next;
-
+            */
             if(cpt.previous)
             {
               previouslink.classList.add("visiblenav");//.style.visibility = "visible";
+              prevlinkBtn.classList.add("visiblenav");
+              prevlinkBtn.classList.add("visiblenav");
             }
             else
             {
               previouslink.classList.remove("visiblenav");//.style.visibility = "hidden";
-
+              prevlinkBtn.classList.remove("visiblenav");
+              prevlinkBtn.classList.remove("visiblenav");
             }
             if(cpt.next)
             {
               nextlink.classList.add("visiblenav");//.style.visibility = "visible";
+              nextlinkBtn.classList.add("visiblenav");
+              nextlinkBtn.classList.add("visiblenav");
             }
             else
             {
               nextlink.classList.remove("visiblenav");//.style.visibility = "hidden";
-
+              nextlinkBtn.classList.remove("visiblenav");
+              nextlinkBtn.classList.remove("visiblenav");
             }            
 
           }
