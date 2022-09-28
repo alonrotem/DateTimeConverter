@@ -1,22 +1,33 @@
+<!--
+TODO
+
+Fix horizontal alignment of play/chapters
+
+-->
+
 <!DOCTYPE html> 
 <html> 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="imgs/ikea.png">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script
-    src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
-    integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
-    crossorigin="anonymous"></script>
-    <script>
-  
-  </script>
+  <link href="fontawesome/css/fontawesome.css" rel="stylesheet">
+  <!--<link href="fontawesome/css/brands.css" rel="stylesheet">-->
+  <link href="fontawesome/css/solid.css" rel="stylesheet"> 
+  <script src="src/jquery.min.js"></script>
+  <script src="src/jquery-ui.min.js"></script>
   <style>
     body
     {
-      /*background-color:aqua;*/ 
-      overflow: hidden;
+      /*overflow: hidden;*/
+      font-family: Arial, Helvetica, sans-serif;
+      /*background-color: gold;*/
     }
+    html, body
+    {
+      height: 100%;
+
+    }
+
     *
     {
         margin:0;
@@ -26,17 +37,17 @@
     #videowrapper
     {
         width: 100vw; 
-        height: 56.25vw; /* 100/56.25 = 1.778 */
+        /*height: 56.25vw; /* 100/56.25 = 1.778 */
         /*background: pink;*/
-        max-height: 100vh;
+        /*max-height: 100vh;*/
+        height: 100%;
         max-width: 177.78vh; /* 16/9 = 1.778 */
         margin: auto;
         position: absolute;
         top:0;bottom:0; /* vertical center */
         left:0;right:0; /* horizontal center */
 
-        display: grid;
-        /*height: auto;*/
+        /*display: grid;*/
         grid-template-columns: auto 250px;
         grid-template-rows: 75px auto;   
 
@@ -44,10 +55,96 @@
 
     #videowrapper video
     {
+      /*
       grid-row-start: 1;
       grid-row-end: 3; 
       grid-column-start: 1;
-      grid-column-end: 3;           
+      grid-column-end: 3;    
+      */       
+    }
+
+    #customcontrols
+    {
+      /*
+      grid-row-start: 1;
+      grid-row-end: 3; 
+      grid-column-start: 1;
+      grid-column-end: 3;
+      /*background-color: yellow;*/
+
+    }
+
+    #videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *
+    {
+      visibility: hidden;
+      opacity: 0;
+      -webkit-transition: opacity 1s ease-in-out;
+       -moz-transition: opacity 1s ease-in-out;
+        -ms-transition: opacity 1s ease-in-out;
+         -o-transition: opacity 1s ease-in-out;
+            transition: opacity 1s ease-in-out;
+    }
+
+    #videowrapper:hover .custom-control, #videowrapper:hover #logo, #videowrapper:hover #playnav, #videowrapper:hover .visiblenav, #videowrapper:hover .visiblenav *
+    {
+      visibility:visible;
+      opacity: 1;
+    }
+
+    #customcontrols-visible
+    {
+      display: block;
+    }
+
+    .speed-control
+    {
+      background: black;
+      color: white;
+      padding: 8px;
+      border-radius: 25px;
+      display: inline-block;
+      width: 38px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 1.3vw;
+      font-weight: bold;
+      margin-left: 10px;      
+    }
+
+    .progressbar
+    {
+      height: 5px;
+      background-color: white;
+      width: 95%;
+      border-radius: 5px;
+      position: absolute;
+      margin: 0% 2.5%;
+      bottom: 35px;
+      box-shadow: 0px 0px 20px black;
+    }
+
+    #playnav
+    {
+      position: absolute;
+      top: 40%;
+      /*left: 50%;*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    #customplaypause
+    {
+      font-size: 5vw;
+      cursor: pointer;
+      /*margin: 0px 38px;*/
+    }
+
+    .custom-control i
+    {
+      text-shadow: 0 0 75px black, 0 0 75px black;
+      color: white;
     }
 
     #chaptersbutton
@@ -59,6 +156,8 @@
     margin-left: auto;
     z-index: 1000;
     cursor:pointer;
+
+    display:none;
     }
 
     #chaptercontainer
@@ -110,17 +209,187 @@
       z-index: 2000;
     }
 
+
+
+    #progressindicator {
+      position: absolute;
+      top: -5px;
+      left: 0px;
+      color: #fbe724;
+    }
+
+    #watchedbar {
+      background-color: #fbe724;
+      position: absolute;
+      top: 0px;
+      height: 5px;
+      width: 0px;
+    }
+    #chapterbar {
+      position: absolute; 
+      top: 0px;
+      width: 100%;
+    }
+    .progress-chapter
+    {
+      width: 10px; 
+      height: 5px; 
+      background: red;
+      position: absolute;
+      top: 0px;
+    }
+
+    #logo
+    {
+      position: absolute;
+      padding: 20px 10px;
+    }
+    #logo img
+    {
+      width: 30%;
+
+    }
+
+    .activespeed
+      {
+        background-color: #fbe724;
+        color: black;
+      }
+    @media all and (orientation:portrait) {
+    /* Style adjustments for portrait mode goes here */
+    .speed-control
+      {
+        font-size: 2.0vw;
+        padding: 2px;
+
+      font-weight: bold;
+      margin-left: 5px;             
+      }    
+
+      #speedpanel
+      {
+
+      }
+    }
+
+    @media (orientation: landscape) and (hover: none) and (pointer: coarse) {
+      /* Style adjustments for landscape mode goes here */
+        #logo
+      {
+        padding: 50px 10px;
+
+      }
+      #speedpanel
+      {
+        top: 30px !important;
+
+        position:absolute;
+      }
+      .speed-control
+      {
+        font-size: 1.7vw;
+        padding: 2px;
+      
+      }
+
+
+
+    }
+    
+    #progresselapsed
+    {
+      position: absolute;
+    top: -20px;
+      color: black;
+    }
+
+    #progresstotal {
+      position: absolute;
+    top: -20px;
+    right: 0px;
+      color: black;
+    }
+
+    #speedpanel
+    {
+      position:absolute;
+      top: 0;
+      right: 0;
+      margin: 20px 10px;
+    }
+
+    #currentchapterindicator
+    {
+      background: #fbe724;
+    /* display: inline-block; */
+    position: absolute;
+    padding: 10px;
+    }
+
+    #previouslink, #nextlink, #currentchapterindicator, #progresselapsed, #progresstotal
+    {
+      -webkit-touch-callout: none; /* Safari */
+        -webkit-user-select: none; /* Chrome */     
+           -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; 
+    }
+
   </style>
 </head>
-<body style=""> 
+<body> 
 		<!-- source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4" -->
 
     <div id="videowrapper">
-      <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/d3sA5plF6kE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
-      <video id="ikeavideo" width="100%"  controls autoplay muted>
+
+      
+      <div style="margin: auto;
+      position: relative; display: flex; height:100%;
+    align-items: center;">
+
+      <video id="ikeavideo" width="100%" autoplay muted lopo style="position:absolute">
         <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4">
         Your browser does not support HTML video.
       </video>
+
+      <div id="customcontrols" style="position:absolute;">
+        <div id="logo">
+        <img src="imgs/ikeanimation.png" />
+        <div id="currentchapterindicator"></div>
+        </div>
+        <!--<div id="customfullscreen" style="z-index: 90000; position:relative; top: 100px;" class="custom-control"><i class="fa-solid fa-expand"></i></div>
+        <div class="custom-control"><i class="fa-solid fa-minimize"></i></div>-->
+
+        <div id="playnav">
+        <div style="width:50%; text-align: center;"><div class="custom-contro" id="previouslink"  style="background-color: yellow; display:inline-block; padding:5px; cursor: pointer;"><i class="fa-solid fa-backward-step"></i><span id="prevlinkText" style="margin-left: 5px;"><!--PREVIOUS--></span></div></div>
+        <div id="customplaypause" class="custom-control"><i id="playbutton" class="fa-solid fa-pause"></i></div>
+        <div  style="width:50%; text-align: center;"><div class="custom-contro" id="nextlink" style="background-color: yellow; display:inline-block; padding:5px; cursor: pointer;"><span id="nextlinkText" style="margin-right: 5px;"><!--Next--></span><i class="fa-solid fa-forward-step"></i></div></div>
+        </div>
+
+
+        <div id="speedpanel">
+          <div id="speed05" class="custom-control speed-control" data-speed="0.5">0.5x</div>
+          <div id="speed10" class="custom-control speed-control" data-speed="1.0">1.0x</div>
+          <div  id="speed125" class="custom-control speed-control" data-speed="1.25">1.25x</div>
+          <div  id="speed15" class="custom-control speed-control" data-speed="1.5">1.5x</div>
+          <div  id="speed20" class="custom-control speed-control" data-speed="2.0">2.0x</div>
+      </div>
+        <div class="custom-control progressbar">
+
+          <div id="customfullscreen" style="z-index: 90000;position: absolute;top: -47px;/* color: blue; */right: 0;" class="custom-control"><i id="fullscreenicon" class="fa-solid fa-expand" style="    color: black;
+            font-size: 2.0vw;"></i></div>
+
+          <div id="progresselapsed"><!--Elapsed--></div>
+          <div id="progresstotal"><!--Total--></div>
+          <div id="watchedbar"></div>
+          <div id="chapterbar">
+
+          </div>
+          <i id="progressindicator" class="fa-solid fa-circle"></i>
+        </div>
+
+
+      </div>
 
       <div id="chaptersbutton">
         <img src="imgs/list-light.png" />
@@ -131,11 +400,108 @@
         </div>
       </div>
 
+</div>
+
       </div>
 
       <!--<div style="position:fixed; z-index:9000; top:0; right:500; background-color:chartreuse;" id="fullscreener">EXPERIMENT</div>-->
 
       <script>
+/*
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ alert("mobile");
+}
+else
+{
+  alert("px");
+}*/
+
+  var ikeavideo = document.getElementById("ikeavideo");
+  
+  var duration_totaltime = document.getElementById("duration_totaltime");
+  var progresstotal = document.getElementById("progresstotal");
+  var progresselapsed = document.getElementById("progresselapsed");
+  var progressindicator = document.getElementById("progressindicator");
+  var chapterbar = document.getElementById("chapterbar");
+  var customfullscreen = document.getElementById("customfullscreen");
+  var fullscreenicon = document.getElementById("fullscreenicon");
+  var videowrapper = document.getElementById("videowrapper");
+  var currentchapterindicator = document.getElementById("currentchapterindicator");
+
+  var previouslink = document.getElementById("previouslink");
+  var prevlinkText = document.getElementById("prevlinkText");
+  var nextlink = document.getElementById("nextlink");
+  var nextlinkText = document.getElementById("nextlinkText");
+
+  var speed05 = document.getElementById("speed05");
+  var speed10 = document.getElementById("speed10");
+  var speed125 = document.getElementById("speed125");
+  var speed15 = document.getElementById("speed15");
+  var speed20 = document.getElementById("speed20");
+  var speeds = ["05", "10", "125", "15", "20"];
+
+  speed05.onclick = function(){ setSpeed("05"); };
+  speed10.onclick = function(){ setSpeed("10"); };
+  speed125.onclick = function(){ setSpeed("125"); };
+  speed15.onclick = function(){ setSpeed("15"); };
+  speed20.onclick = function(){ setSpeed("20"); };
+
+  previouslink.onclick = function(){ var info = getChapters(); if(info.previouslinktime > -1) { ikeavideo.currentTime =  info.previouslinktime } };
+  nextlink.onclick = function(){ var info = getChapters(); if(info.nextlinktime > -1) { ikeavideo.currentTime =  info.nextlinktime } };
+
+  //#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *
+  var autohideselector = "#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *";
+  $(document).on("touchend click", function(){
+    $ (autohideselector).show();
+    hideMenu(); //hide again after 2 seconds
+  });
+
+  function hideMenu(){
+    setTimeout( function(){
+      $ (autohideselector).fadeOut(1500);
+    }, 4000);
+}
+
+  customfullscreen.onclick = function(){
+    //videowrapper.requestFullscreen();
+    if (document.fullscreenElement) {
+		  document.exitFullscreen();
+      fullscreenicon.classList.add("fa-expand");
+      fullscreenicon.classList.remove("fa-minimize");
+    } else {
+      videowrapper.requestFullscreen();
+      fullscreenicon.classList.add("fa-minimize");
+      fullscreenicon.classList.remove("fa-expand");
+    }    
+  };
+
+  function setSpeed(speed)
+  {
+    for (var s=0; s < speeds.length; s++)
+    {
+      var speedbtn = document.getElementById("speed" + speeds[s]);
+      if(speed==speeds[s])
+      {
+        speedbtn.classList.add("activespeed");
+        ikeavideo.playbackRate = speedbtn.getAttribute("data-speed");
+      }
+      else
+      {
+        speedbtn.classList.remove("activespeed");
+      }
+    }
+  }
+
+function resetHeight(){
+    // reset the body height to that of the inner browser
+    document.body.style.height = window.innerHeight + "px";
+    document.getElementById("customcontrols").style.width = (ikeavideo.clientWidth)+"px"; 
+    document.getElementById("customcontrols").style.height = (ikeavideo.clientHeight)+"px";
+}
+// reset the height whenever the window's resized
+window.addEventListener("resize", resetHeight);
+// called to initially set the height.
+
         /*
 var viewportHeight = window.screen.height //* window.devicePixelRatio;//window.innerHeight;
 var viewportWidth =  window.screen.width //* window.devicePixelRatio; //window.innerWidth;
@@ -175,6 +541,145 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 
               }        
           ]
           
+          function getChapters()
+          {
+            var chapterInfo = {
+              previous: "",
+              previouslinktime: -1,
+              current: "",
+              next: "",
+              nextlinktime: -1
+            };
+            for(var c=0; c<chapters.length; c++)
+            {
+              if(ikeavideo.currentTime >= chapters[c].time)
+              {
+                  chapterInfo.current = chapters[c].label;
+                  if(c>0)
+                  {
+                    chapterInfo.previous = chapters[c-1].label;
+                    chapterInfo.previouslinktime = chapters[c-1].time;
+                  }
+                  if(c+1 < chapters.length && ikeavideo.currentTime < chapters[c+1].time)
+                  {
+                    chapterInfo.next = chapters[c+1].label;
+                    chapterInfo.nextlinktime = chapters[c+1].time;
+                  }                  
+              }
+            }
+            //ikeavideo.currentTime
+
+            return chapterInfo;
+          }
+
+          //play/pause
+          //fullscreen/restore
+          //click/tap on progressbar
+          //drag progress circle
+          //change speed
+          //show progress
+
+          // contols visible on hover
+          // visible on tap
+          //if touched - restart count
+
+          
+          ikeavideo.oncanplay = function () { 
+            progresstotal.textContent = formatTime(ikeavideo.duration); 
+
+            for (var c=0; c < chapters.length; c++)
+            {
+              if(chapters[c].time <= ikeavideo.duration)
+              {
+                var chapterdiv = document.createElement('div');
+                chapterdiv.setAttribute("data-label", chapters[c].label);
+                chapterdiv.setAttribute("data-jumpto", chapters[c].time);
+                chapterdiv.className = "progress-chapter";
+                chapterdiv.style.left = (chapters[c].time * 100 / ikeavideo.duration) + "%";
+                chapterbar.appendChild(chapterdiv);
+              }
+            }
+            resetHeight();
+            setSpeed("10");
+          };
+          
+          ikeavideo.ontimeupdate = function () {
+            progresselapsed.textContent = formatTime(ikeavideo.currentTime);
+            var prcposition = (ikeavideo.currentTime * 100 / ikeavideo.duration) + "%";
+            progressindicator.style.left = prcposition;
+            watchedbar.style.width = prcposition;
+            
+            var cpt = getChapters();
+            currentchapterindicator.textContent = cpt.current;
+            prevlinkText.textContent = cpt.previous;
+            nextlinkText.textContent = cpt.next;
+
+            if(cpt.previous)
+            {
+              previouslink.classList.add("visiblenav");//.style.visibility = "visible";
+            }
+            else
+            {
+              previouslink.classList.remove("visiblenav");//.style.visibility = "hidden";
+
+            }
+            if(cpt.next)
+            {
+              nextlink.classList.add("visiblenav");//.style.visibility = "visible";
+            }
+            else
+            {
+              nextlink.classList.remove("visiblenav");//.style.visibility = "hidden";
+
+            }            
+
+          }
+
+          function formatTime(totalseconds)
+          {
+            remainingseconds = Math.floor(totalseconds);
+            var hours = "00";
+            var minutes = "00";
+            if (remainingseconds >= 60*60) //more than an hour
+            {
+              var totalhours = Math.floor(remainingseconds/(60*60));
+              remainingseconds -= totalhours*(60*60);
+              hours = totalhours;
+            }
+            if(remainingseconds >= 60) //more than a minute
+            {
+              var totalminutes = Math.floor(remainingseconds/60);
+              remainingseconds -= totalminutes*60;
+              minutes = totalminutes;
+            }
+            return padnum(hours) + ":" + padnum(minutes) + ":" + padnum(remainingseconds);
+          }
+
+          function padnum(num)
+          {
+            var pad = "00";
+            var numstr = pad + num; 
+            var cutout_len = Math.max(num.toString().length, pad.length); 
+            return numstr.substr(numstr.length - cutout_len, cutout_len);
+          }
+
+          var playButton = document.getElementById('playbutton');
+          playButton.onclick = togglePlay;
+
+          function togglePlay() {
+          if (ikeavideo.paused || ikeavideo.ended) {
+            ikeavideo.play();
+            playButton.classList.remove("fa-play");
+            playButton.classList.add("fa-pause");            
+          } else {
+            ikeavideo.pause();
+            playButton.classList.add("fa-play");
+            playButton.classList.remove("fa-pause");
+          }
+        }
+
+
+//========================================================
           function toggleChapterList()
           {
             var chapterlist = $('#chapterslist');
