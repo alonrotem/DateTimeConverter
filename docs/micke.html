@@ -79,7 +79,15 @@ function readjustZoom()
 {
     var win = $(this); //this = window
     var h = win.height();
-    var newhight = h/600;
+    var w = win.width();
+    if(h < w) //landscape
+    {
+        var newhight = h/600;
+    }
+    else
+    {
+        var newwidth = w/922;
+    }
     console.log("Height: " + h + ", new zoom: " + newhight);
     $('.flipbook').turn('zoom', newhight);
 }
