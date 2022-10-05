@@ -1,0 +1,102 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+<meta name="viewport" content="width = 1050, user-scalable = no" />
+<script type="text/javascript" src="src/jquery.min.1.7.js"></script>
+<script type="text/javascript" src="src/modernizr.2.5.3.min.js"></script>
+</head>
+<body>
+
+<div class="flipbook-viewport">
+	<div class="container">
+		<div class="flipbook">
+			<div style="background-image:url(imgs/micke-book/micke-0.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-1.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-2.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-3.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-4.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-5.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-6.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-7.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-8.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-9.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-10.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-11.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-12.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-13.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-14.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-15.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-16.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-17.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-18.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-19.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-20.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-21.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-22.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-23.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-24.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-25.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-26.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-27.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-28.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-29.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-30.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-31.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-32.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-33.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-34.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-35.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-36.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-37.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-38.png)"></div>
+			<div style="background-image:url(imgs/micke-book/micke-39.png)"></div>
+
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+//page-flip-01a.mp3
+var beat = new Audio('page-flip-01a.mp3');
+
+
+
+function loadApp() {
+	// Create the flipbook
+	$('.flipbook').turn({
+			// Width
+			width:922,
+			// Height
+			height:600,
+			// Elevation
+			elevation: 50,
+			// Enable gradients
+			gradients: true,
+			// Auto center this flipbook
+			autoCenter: true,
+            when: {
+                turning: function (e, page, pageObj){
+                    beat.play();
+                }
+            }
+	});
+}
+
+// Load the HTML4 version if there's not CSS transform
+yepnope({
+	test : Modernizr.csstransforms,
+	yep: ['src/turn.min.js'],
+	nope: ['src/turn.html4.min.js'],
+	both: ['style/basic.css'],
+	complete: loadApp
+});
+
+</script>
+
+</body>
+</html>
