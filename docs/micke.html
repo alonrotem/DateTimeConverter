@@ -159,20 +159,32 @@ $(document).ready(function(){
 
 	$("#btnFullscreen").click(
 		function() {
-			//document.getElementById("bodywrapper").requestFullscreen();
 			if (!document.fullscreenElement) {
 				document.getElementById("bodywrapper").requestFullscreen();
-				$("#fullscreenIcon").addClass("fa-down-left-and-up-right-to-center");
-				$("#fullscreenIcon").removeClass("fa-up-right-and-down-left-from-center");
 			} else if (document.exitFullscreen) {
 				document.exitFullscreen();
-				$("#fullscreenIcon").addClass("fa-up-right-and-down-left-from-center");
-				$("#fullscreenIcon").removeClass("fa-down-left-and-up-right-to-center");
 			}
+			togglefullscreenbutton();
 		}
+	);
+
+	["", "webkit", "moz", "ms"].forEach(
+    	prefix => document.addEventListener(prefix+"fullscreenchange", togglefullscreenbutton, false)
 	);
 });
 
+function togglefullscreenbutton()
+{
+	if (!document.fullscreenElement) {
+		$("#fullscreenIcon").addClass("fa-up-right-and-down-left-from-center");
+		$("#fullscreenIcon").removeClass("fa-down-left-and-up-right-to-center");
+	}
+	else
+	{
+		$("#fullscreenIcon").addClass("fa-down-left-and-up-right-to-center");
+		$("#fullscreenIcon").removeClass("fa-up-right-and-down-left-from-center");
+	}
+}
 
 function readjustZoom()
 {
