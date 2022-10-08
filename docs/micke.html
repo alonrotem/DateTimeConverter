@@ -8,12 +8,53 @@
 <meta name="viewport" content="width = 1050, user-scalable = no" />
 <script type="text/javascript" src="src/jquery.min.1.7.js"></script>
 <script type="text/javascript" src="src/modernizr.2.5.3.min.js"></script>
+<link href="fontawesome/css/fontawesome.css" rel="stylesheet">
+<link href="fontawesome/css/solid.css" rel="stylesheet"> 
+<style>
+	.hiddenfirst
+	{
+		opacity:0;
+	}
+	#toolbar {
+		color: #005aa9;
+    	background-color: #fcd500;
+		font-size: 25px;
+    	padding: 5px;
+		border-radius: 15px;
+		position: absolute;
+		z-index: 2000;
+	}
+
+	.toolbar_vertical
+	{
+	}
+
+	.toolbar_vertical div
+	{
+		display: block;
+		padding: 15px 5px;
+	}
+
+	.toolbar_horizontal
+	{
+	}
+
+	.toolbar_horizontal div
+	{
+		display: inline-block;
+		padding: 5px 15px;
+	}
+
+</style>
 </head>
 <body>
 
-<div class="flipbook-viewport">
-	<div class="container" style="position:absolute;width: 50%;
-    margin: 0px auto; top: 300px;">
+<div  id="bodywrapper">
+<div class="flipbook-viewport hiddenfirst">
+	
+	<div id="flipcontainer" class="container" style="position:absolute;
+	/*width: 50%;
+    margin: 0px auto;*/ top: 300px; left: 461px">
 		<div class="flipbook">
 			<div style="background-image:url(imgs/micke-book/micke-0.png)"></div>
 			<div style="background-image:url(imgs/micke-book/micke-1.png)"></div>
@@ -44,22 +85,40 @@
 			<div style="background-image:url(imgs/micke-book/micke-26.png)"></div>
 			<div style="background-image:url(imgs/micke-book/micke-27.png)"></div>
 		</div>
+		
 	</div>
+
+</div>
+<span id="toolbar" class="hiddenfirst">
+	<div id="btnFullscreen">
+		<i id="fullscreenIcon" class="fa-solid fa-up-right-and-down-left-from-center"></i>
+	</div>
+	<div>
+		<a href="ikea-demo.html">
+			<i class="fa-solid fa-video"></i>
+		</a>
+	</div>
+	<div>
+		<a href="micke-desk-oak-effect__AA-476633-11-2.pdf">
+			<i class="fa-solid fa-file-pdf"></i>
+		</a>
+	</div>		
+</span>
 </div>
 
 <script type="text/javascript">
 //page-flip-01a.mp3
-var beat = new Audio('page-flip-01a.mp3');
-
-
+var pageflipsound = new Audio('page-flip-01a.mp3');
+var basewidth = 922;
+var baseheight = 600;
 
 function loadApp() {
 	// Create the flipbook
 	$('.flipbook').turn({
 			// Width
-			width:922,
+			width:basewidth,
 			// Height
-			height:600,
+			height:baseheight,
 			// Elevation
 			elevation: 50,
 			// Enable gradients
@@ -68,38 +127,115 @@ function loadApp() {
 			autoCenter: false,
             when: {
                 turning: function (e, page, pageObj){
-                    beat.play();
+                    pageflipsound.play();
                 }
             }
 	});
-    readjustZoom();
 }
+
+
+$(document).ready(function(){
+	var i=0, maxTries = 10, intervalms=50;
+	//check that the flipbook is initialized before adjusting sizes and showing it
+	var timer = setInterval(function() {
+		if($('.flipbook').turn)
+		{
+			console.log("(" + i + ") Flipbook READY");
+			clearInterval(timer);
+			readjustZoom();
+			$(".hiddenfirst").animate({opacity: 1}, 400);
+		}
+		else
+		{
+			console.log("(" + i + ") Flipbook not ready...")
+		}
+		i++;
+		if (i === maxTries){
+			clearInterval(timer);
+			console.log("Could not load the Flipbook within " + maxTries + " cycles of " + intervalms + "msec");
+		}
+		console.log("Loaded the Flipbook within " + i + " cycles of " + intervalms + "msec");
+	}, intervalms);
+
+	$("#btnFullscreen").click(
+		function() {
+			//document.getElementById("bodywrapper").requestFullscreen();
+			if (!document.fullscreenElement) {
+				document.getElementById("bodywrapper").requestFullscreen();
+				$("#fullscreenIcon").addClass("fa-down-left-and-up-right-to-center");
+				$("#fullscreenIcon").removeClass("fa-up-right-and-down-left-from-center");
+			} else if (document.exitFullscreen) {
+				document.exitFullscreen();
+				$("#fullscreenIcon").addClass("fa-up-right-and-down-left-from-center");
+				$("#fullscreenIcon").removeClass("fa-down-left-and-up-right-to-center");
+			}
+		}
+	);
+});
+
 
 function readjustZoom()
 {
-    var win = $(this); //this = window
+	console.log("--------------------------------------");
+    var win = $(this);
     var h = win.height();
     var w = win.width();
-    if(h < w) //landscape
-    {
-        var newhight = h/600;
-    }
-    else
-    {
-        var newwidth = w/922;
-    }
-    console.log("Height: " + h + ", new zoom: " + newhight);
-    $('.flipbook').turn('zoom', newhight);
+	var newhight = 0;
+
+	var widthRatio = (basewidth + 30)/ w ;
+	var heightRatio = (baseheight + 30) / h ;
+	var toolbarontheside = true;
+	if(heightRatio > widthRatio) {
+		// scale image to match the height, and let the width have the gaps
+		newhight = (h -30)/baseheight;
+		console.log("scale to height (sides with gaps)");
+		toolbarontheside = true;
+	} else {
+		// scale image to match the width, and let the height have the gaps
+		newhight = (w - 30)/basewidth;
+		console.log("scale to width (top and bottom with gaps)");
+		toolbarontheside = false;
+	}
+	//console.log("Zooming to " + newhight);
+	if($('.flipbook').turn)
+    	$('.flipbook').turn('zoom', newhight);
+	else
+		console.log("Not initialized...");
+
+	var leftmarg = ($(this).width() - $('#flipcontainer').width())/2;
+	var topmarg = ($(this).height() - $('#flipcontainer').height())/2;
+	//console.log("leftmarg calculated " + leftmarg + ", topmarg calculated " + topmarg);
+	
+	//console.log("flipcontainer.left " + ((basewidth/2)+leftmarg));
+	$('#flipcontainer').css({left: ((basewidth/2)+leftmarg) + "px"});
+
+	//console.log("Setting toolbar to left: " +  ($('.flipbook').width() + $('.flipbook').offset().left));
+	if(toolbarontheside)
+	{
+		$("#toolbar").addClass("toolbar_vertical");
+		$("#toolbar").removeClass("toolbar_horizontal");
+
+		var 
+			toppos = ($('.flipbook').height() + $('.flipbook').offset().top)/2 - ($("#toolbar").height()/2),
+			leftpos = $('.flipbook').width() + $('.flipbook').offset().left;
+		$("#toolbar").css({ top: toppos + "px", left: leftpos +"px"});
+	}
+	else
+	{
+		$("#toolbar").addClass("toolbar_horizontal");
+		$("#toolbar").removeClass("toolbar_vertical");
+
+		var 
+			toppos = $('.flipbook').height() + $('.flipbook').offset().top,
+			leftpos = ($('.flipbook').width() + $('.flipbook').offset().left)/2 - ($("#toolbar").width()/2);		
+		$("#toolbar").css({ top: toppos + "px", left: leftpos +"px"});
+	}
+
+	console.log("=============================-");
 }
 
 $(window).resize(function(){
     readjustZoom();
-    /*
-    if (win.height() >= 820) { flipbook.turn('display','double');}
-    else {
-        flipbook.turn('display','single');
-    }
-    */
 });
 
 // Load the HTML4 version if there's not CSS transform

@@ -1332,6 +1332,7 @@
               this.unbind(eventName).
                 bind(eventName, options.when[eventName]);
             }
+        
         return this;
       }
     },
@@ -2383,7 +2384,10 @@
       return dec($(this[0]), flipMethods, arguments);
     },
     turn: function() {
-      return dec($(this[0]), turnMethods, arguments);
+      var res = dec($(this[0]), turnMethods, arguments);
+//      if(this.loaded)
+//        this.loaded();
+      return res;
     },
     transform: function(transform, origin) {
       var properties = {};
@@ -2448,5 +2452,7 @@
   $.cssPrefix = getPrefix;
   $.cssTransitionEnd = getTransitionEnd;
   $.findPos = findPos;
+
+
   })(jQuery);
   
