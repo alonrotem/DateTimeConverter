@@ -1,8 +1,12 @@
 <!--
+Changelog
+Colors of the logo and chapters and micke book top bar
+mouse hiding controls better
+links from vide to booklet
+
 TODO
-
-Fix horizontal alignment of play/chapters
-
+draggable progress
+popup QR
 -->
 
 <!DOCTYPE html> 
@@ -37,9 +41,6 @@ Fix horizontal alignment of play/chapters
     #videowrapper
     {
         width: 100vw; 
-        /*height: 56.25vw; /* 100/56.25 = 1.778 */
-        /*background: pink;*/
-        /*max-height: 100vh;*/
         height: 100%;
         max-width: 177.78vh; /* 16/9 = 1.778 */
         margin: auto;
@@ -50,46 +51,8 @@ Fix horizontal alignment of play/chapters
         /*display: grid;*/
         grid-template-columns: auto 250px;
         grid-template-rows: 75px auto;   
-
     }
 
-    #videowrapper video
-    {
-      /*
-      grid-row-start: 1;
-      grid-row-end: 3; 
-      grid-column-start: 1;
-      grid-column-end: 3;    
-      */       
-    }
-
-    #customcontrols
-    {
-      /*
-      grid-row-start: 1;
-      grid-row-end: 3; 
-      grid-column-start: 1;
-      grid-column-end: 3;
-      /*background-color: yellow;*/
-
-    }
-
-    #videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *, #videowrapper #prevlinkBtn.visiblenav
-    {
-      visibility: hidden;
-      opacity: 0;
-      -webkit-transition: opacity 1s ease-in-out;
-       -moz-transition: opacity 1s ease-in-out;
-        -ms-transition: opacity 1s ease-in-out;
-         -o-transition: opacity 1s ease-in-out;
-            transition: opacity 1s ease-in-out;
-    }
-
-    #videowrapper:hover .custom-control, #videowrapper:hover #logo, #videowrapper:hover #playnav, #videowrapper:hover .visiblenav, #videowrapper:hover .visiblenav *, #videowrapper:hover #prevlinkBtn.visiblenav
-    {
-      visibility:visible;
-      opacity: 1;
-    }
 
     #customcontrols-visible
     {
@@ -134,6 +97,11 @@ Fix horizontal alignment of play/chapters
       width: 100%;
     }
 
+    #playnav *, .progressbar *
+    {
+      visibility: hidden;
+    }
+
     #customplaypause
     {
       font-size: 5vw;
@@ -147,19 +115,6 @@ Fix horizontal alignment of play/chapters
       color: white;
     }
 
-    #chaptersbutton
-    {
-      grid-row-start: 1;
-      grid-column-start: 2;
-/*background-color: yellow;*/
-    margin-right: 0;
-    margin-left: auto;
-    z-index: 1000;
-    cursor:pointer;
-
-    display:none;
-    }
-
     #chaptercontainer
     {
       grid-row-start: 2;
@@ -167,47 +122,7 @@ Fix horizontal alignment of play/chapters
       z-index: 2000;
       display: none;
     }
-    #chapterslist
-    {
-
-      background: rgba(0, 0, 0, 0.5);
-      
-      height: 100%;
-      float: right;
-      /*position: relative;
-      
-      right: -150px;
-      */
-      /*
-      transition-property: right;
-      transition-duration: 0.5s;
-      transition-timing-function: ease-in-out;
-      */
-      display: none;
-      z-index: 0;
-    }
-    #chapterslist div
-    {
-
-    padding: 5px;
-    margin: 5px;
-    }
-
-    #chapterslist div a
-    {
-
-    font-family: arial;
-    color: white;
-    text-decoration: none;
-
-    }
-
-    .shown
-    {
-      right: 0px !important;
-      display: block;
-      z-index: 2000;
-    }
+    
 
 
 
@@ -232,11 +147,16 @@ Fix horizontal alignment of play/chapters
     }
     .progress-chapter
     {
-      width: 10px; 
+      width: 5px; 
       height: 5px; 
-      background: red;
+      background: #0024C3;
       position: absolute;
       top: 0px;
+    }
+
+    #prevlinkBtn, #nextlinkBtn
+    {
+      color: #0024C3;
     }
 
     #logo
@@ -255,26 +175,41 @@ Fix horizontal alignment of play/chapters
         background-color: #fbe724;
         color: black;
       }
-    @media all and (orientation:portrait) {
+    @media all and (orientation:portrait)  {
     /* Style adjustments for portrait mode goes here */
     .speed-control
       {
         font-size: 2.0vw;
         padding: 2px;
+        font-weight: bold;
+        margin-left: 5px;             
+        }    
 
-      font-weight: bold;
-      margin-left: 5px;             
-      }    
+        #additionalLinksPanel{
+          top: 20px !important;
+          margin-left: 5px !important;  
+        }
 
-      #speedpanel
-      {
+        #additionalLinksPanel a {
+          font-size: 15px !important;
+        }
 
-      }
+        #additionalLinksPanel div {
+          margin: 7px 0px !important;
+          font-size: 15px !important;
+        }
+
+        #fullscreenicon
+        {
+          font-size: 15px !important;
+        }
+
+
     }
 
     @media (orientation: landscape) and (hover: none) and (pointer: coarse) {
       /* Style adjustments for landscape mode goes here */
-        #logo
+      #logo
       {
         padding: 50px 10px;
 
@@ -292,7 +227,26 @@ Fix horizontal alignment of play/chapters
       
       }
 
+      #additionalLinksPanel{
+      top: 50px !important;
+    }
 
+      #additionalLinksPanel div {
+        margin: 15px 0px !important;
+      }
+
+      #additionalLinksPanel a {
+      font-size: 25px !important;
+    }
+
+    #fullscreenicon
+    {
+      font-size: 25px !important;
+    }
+
+    .modal {
+  padding-top: 0px !important; /* Location of the box */
+    }
 
     }
     
@@ -336,14 +290,102 @@ Fix horizontal alignment of play/chapters
                 user-select: none; 
     }
 
+    #additionalLinksPanel{
+      position:absolute; 
+      top: 100px;
+      right: 0; 
+      margin: 20px 10px;
+    }
+
+    #additionalLinksPanel div {
+      margin: 20px 0px;
+      text-align: center;
+      color: #0024C3;
+    }
+
+    #additionalLinksPanel a {
+      font-size: 40px;
+      color: #0024C3;
+      text-decoration: none;
+    }
+
+    #additionalLinksPanel a:visited {
+      color: #0024C3;
+    }
+
+    #fullscreenicon
+    {
+      font-size: 40px;
+    }
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}   
+
+#modal-table
+{
+  width: 100%;
+  border: 0px;
+}
+#modal-table td
+{
+  width:50%;
+  border: 0px;
+  text-align:center;
+}
+
+#modal-table a{
+  color: black;
+  text-decoration: none;
+}
+#modal-table a:visited{
+  color: black;
+}
+
+
+#modal-table img
+{
+  max-width: 100%;
+  width: 100%;
+}
+#modal-table i
+{
+  font-size: 30px;
+}
+
+#modalclose
+{
+  font-size: 25px;
+    color: red;
+}
+
   </style>
 </head>
 <body> 
 		<!-- source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4" -->
 
     <div id="videowrapper">
-
-      
       <div style="margin: auto;
       position: relative; display: flex; height:100%;
     align-items: center;">
@@ -354,31 +396,38 @@ Fix horizontal alignment of play/chapters
       </video>
 
       <div id="customcontrols" style="position:absolute;">
-        <div id="logo">
+        <div id="logo" class="autohidable">
         <img src="imgs/ikeanimation.png" />
         <div id="currentchapterindicator"></div>
         </div>
         <!--<div id="customfullscreen" style="z-index: 90000; position:relative; top: 100px;" class="custom-control"><i class="fa-solid fa-expand"></i></div>
         <div class="custom-control"><i class="fa-solid fa-minimize"></i></div>-->
 
-        <div id="playnav">
-        <div style="width:50%; text-align: center;"><div class="custom-contro" id="previouslink"  style="display:inline-block; padding:5px; cursor: pointer;"><i  id="prevlinkBtn" class="fa-solid fa-backward-step" style="padding:7px;"></i><span id="prevlinkText"><!--PREVIOUS--></span></div></div>
-        <div id="customplaypause" class="custom-control"><i id="playbutton" class="fa-solid fa-pause"></i></div>
-        <div  style="width:50%; text-align: center;"><div class="custom-contro" id="nextlink" style="display:inline-block; padding:5px; cursor: pointer;"><span id="nextlinkText"><!--Next--></span><i id="nextlinkBtn" class="fa-solid fa-forward-step"  style="padding:7px;"></i></div></div>
+        <div id="playnav" class="autohidable">
+        <div style="width:50%; text-align: center;"><div class="custom-control autohidable" id="previouslink"  style="display:inline-block; padding:5px; cursor: pointer;"><i  id="prevlinkBtn" class="fa-solid fa-backward-step" style="padding:7px;"></i><span id="prevlinkText"><!--PREVIOUS--></span></div></div>
+        <div id="customplaypause" class="custom-control autohidable"><i id="playbutton" class="fa-solid fa-pause"></i></div>
+        <div  style="width:50%; text-align: center;"><div class="custom-control autohidable" id="nextlink" style="display:inline-block; padding:5px; cursor: pointer;"><span id="nextlinkText"><!--Next--></span><i id="nextlinkBtn" class="fa-solid fa-forward-step"  style="padding:7px;"></i></div></div>
         </div>
 
 
-        <div id="speedpanel">
-          <div id="speed05" class="custom-control speed-control" data-speed="0.5">0.5x</div>
-          <div id="speed10" class="custom-control speed-control" data-speed="1.0">1.0x</div>
-          <div  id="speed125" class="custom-control speed-control" data-speed="1.25">1.25x</div>
-          <div  id="speed15" class="custom-control speed-control" data-speed="1.5">1.5x</div>
-          <div  id="speed20" class="custom-control speed-control" data-speed="2.0">2.0x</div>
+        <div id="speedpanel" class="autohidable">
+          <div id="speed05" class="custom-control speed-control autohidable" data-speed="0.5">0.5x</div>
+          <div id="speed10" class="custom-control speed-control autohidable" data-speed="1.0">1.0x</div>
+          <div  id="speed125" class="custom-control speed-control autohidable" data-speed="1.25">1.25x</div>
+          <div  id="speed15" class="custom-control speed-control autohidable" data-speed="1.5">1.5x</div>
+          <div  id="speed20" class="custom-control speed-control autohidable" data-speed="2.0">2.0x</div>
       </div>
-        <div class="custom-control progressbar">
 
-          <div id="customfullscreen" style="z-index: 90000;position: absolute;top: -47px;/* color: blue; */right: 0;" class="custom-control"><i id="fullscreenicon" class="fa-solid fa-expand" style="    color: black;
-            font-size: 2.0vw;"></i></div>
+      <div id="additionalLinksPanel" class="autohidable">
+        <div><a href="micke.html" target="_blank"><i class="fa-solid fa-book-open"></i></a></div>
+        <div><a href="micke-desk-oak-effect__AA-476633-11-2.pdf"><i class="fa-solid fa-file-pdf"></i></a></div>
+        <div><a id="btnOpenModal" href="#"><i class="fa-solid fa-qrcode"></i></a></div>
+        <div id="customfullscreen" style="z-index: 90000 /*;position: absolute;top: -47px;right: 0;*/" class="autohidable"><i id="fullscreenicon" class="fa-solid fa-expand"></i></div>        
+      </div>
+
+        <div class="custom-control progressbar autohidable">
+
+
 
           <div id="progresselapsed"><!--Elapsed--></div>
           <div id="progresstotal"><!--Total--></div>
@@ -392,20 +441,49 @@ Fix horizontal alignment of play/chapters
 
       </div>
 
-      <div id="chaptersbutton">
-        <img src="imgs/list-light.png" />
-      </div>
-      <div id="chaptercontainer">
-        <div id="chapterslist">
-          
-        </div>
-      </div>
-
 </div>
 
       </div>
 
       <!--<div style="position:fixed; z-index:9000; top:0; right:500; background-color:chartreuse;" id="fullscreener">EXPERIMENT</div>-->
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div><span id="modalclose" class="close"><i class="fa-solid fa-circle-xmark"></i></span></div>
+    <div>
+     <table id="modal-table">
+      <tr>
+        <td>
+          <a href="micke.html" target="_blank">
+          <img src="imgs/qr-flipbook.jpg" />
+          </a>
+        </td>
+        <td>
+          <a href="micke-desk-oak-effect__AA-476633-11-2.pdf">
+          <img src="imgs/qr-pdf.jpg" />
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="micke.html" target="_blank">
+          <i class="fa-solid fa-book-open"></i>
+          </a>
+        </td>
+        <td>
+          <a href="micke-desk-oak-effect__AA-476633-11-2.pdf">
+          <i class="fa-solid fa-file-pdf"></i>
+          </a>
+        </td>
+      </tr>
+     </table>
+    </div>
+  </div>
+
+</div>
 
       <script>
 /*
@@ -428,6 +506,9 @@ else
   var fullscreenicon = document.getElementById("fullscreenicon");
   var videowrapper = document.getElementById("videowrapper");
   var currentchapterindicator = document.getElementById("currentchapterindicator");
+  var btnOpenModal = document.getElementById("btnOpenModal");
+  var myModal = document.getElementById("myModal");
+  var modalClose = document.getElementsByClassName("close")[0];
 
   var previouslink = document.getElementById("previouslink");
   var prevlinkText = document.getElementById("prevlinkText");
@@ -452,18 +533,59 @@ else
   previouslink.onclick = function(){ var info = getChapters(); if(info.previouslinktime > -1) { ikeavideo.currentTime =  info.previouslinktime } };
   nextlink.onclick = function(){ var info = getChapters(); if(info.nextlinktime > -1) { ikeavideo.currentTime =  info.nextlinktime } };
 
+  var initialstatevideoplaying = false;
+  btnOpenModal.onclick = function(){ initialstatevideoplaying = (!ikeavideo.paused && !ikeavideo.ended); pauseVideo();  myModal.style.display = "block"; };
+
+  modalClose.onclick = function() {
+    myModal.style.display = "none";
+    if(initialstatevideoplaying)
+    {
+      playVideo();
+    }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == myModal) {
+    myModal.style.display = "none";
+    if(initialstatevideoplaying)
+    {
+      playVideo();
+    }    
+  }
+}
+
+
+  var readytoplay = false;
+
   //#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *
-  var autohideselector = "#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *";
+  //var autohideselector = "#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #customplaypause, #videowrapper .visiblenav, #videowrapper .visiblenav *";
+  var autohideselector = ".autohidable";
   $(document).on("touchend", function(){
-    $ (autohideselector).show();
-    hideMenu(); //hide again after 2 seconds
+    if(readytoplay)
+    {
+      $ (autohideselector).show();
+      hideMenu(); //hide again after 2 seconds
+    }
   });
 
   function hideMenu(){
     setTimeout( function(){
       $ (autohideselector).fadeOut(1500);
-    }, 4000);
-}
+    }, 2000);
+  }
+  var timer; 
+
+  $('body').mousemove(function() {
+    if(readytoplay)
+    {
+
+      $ (autohideselector).show();
+      clearTimeout(timer);
+      timer=setTimeout(hideMenu,300);
+    }
+  });
+
 
   customfullscreen.onclick = function(){
     //videowrapper.requestFullscreen();
@@ -502,20 +624,7 @@ function resetHeight(){
     document.getElementById("customcontrols").style.height = (ikeavideo.clientHeight)+"px";
 }
 // reset the height whenever the window's resized
-window.addEventListener("resize", resetHeight);
-// called to initially set the height.
-
-        /*
-var viewportHeight = window.screen.height //* window.devicePixelRatio;//window.innerHeight;
-var viewportWidth =  window.screen.width //* window.devicePixelRatio; //window.innerWidth;
-
-alert("videowrapper.style.height = " + (viewportHeight*100/viewportWidth).toFixed(2) + "vw; videowrapper.style.maxWidth = " + (viewportWidth*100/viewportHeight).toFixed(2) + "vh");
-var vwap = document.getElementById("videowrapper");
-
-vwap.style.height = (viewportHeight*100/viewportWidth).toFixed(2) + "vw";//* 100/56.25 = 1.778
-vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 16/9 = 1.778 
-*/
-
+  window.addEventListener("resize", resetHeight);
 
         var chapters = [
             {
@@ -542,7 +651,7 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 
                 label: "Design options",
                   time: 304
               }        
-          ]
+          ];
           
           function getChapters()
           {
@@ -585,9 +694,13 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 
           // contols visible on hover
           // visible on tap
           //if touched - restart count
-
+          ikeavideo.onplay = function() {
+            $ (autohideselector).hide();
+            $("#playnav *, .progressbar *").css({ visibility: "visible" });
+          };
           
           ikeavideo.oncanplay = function () { 
+            
             progresstotal.textContent = formatTime(ikeavideo.duration); 
 
             for (var c=0; c < chapters.length; c++)
@@ -603,6 +716,8 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 
               }
             }
             resetHeight();
+            readytoplay = true;
+            console.log("controls are set");
             setSpeed("10");
           };
           
@@ -678,57 +793,30 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 
 
           function togglePlay() {
           if (ikeavideo.paused || ikeavideo.ended) {
+            playVideo();
+          } else {
+            pauseVideo();
+          }
+        }
+
+          function playVideo()
+          {
             ikeavideo.play();
             playButton.classList.remove("fa-play");
-            playButton.classList.add("fa-pause");            
-          } else {
+            playButton.classList.add("fa-pause"); 
+          }
+
+          function pauseVideo()
+          {
             ikeavideo.pause();
             playButton.classList.add("fa-play");
             playButton.classList.remove("fa-pause");
           }
-        }
+
 
 
 //========================================================
-          function toggleChapterList()
-          {
-            var chapterlist = $('#chapterslist');
-            var chaptercontainer = $("#chaptercontainer");
-            if (chapterlist.is(":visible"))
-            {
-              chapterlist.hide('slide', {direction: 'right'}, 400, function (){ chaptercontainer.hide(); });
-              
-            }
-            else
-            {
-              chaptercontainer.show();
-              chapterlist.show('slide', {direction: 'right'}, 400);
-            }  
-      
-          }
-          //alert(chapters["beginning"].label)
-        var chapterslist = document.getElementById("chapterslist");
-        for (var c=0; c < chapters.length; c++)
-          {
-            var chapterdiv=document.createElement('div');
-      
-            var a = document.createElement('a');
-            var linkText = document.createTextNode(chapters[c].label);
-            a.appendChild(linkText);
-            a.title = chapters[c].label;
-            a.href = "javascript:void(0)";
-            a.setAttribute('onclick', 'javascript:document.getElementById("ikeavideo").currentTime = ' + chapters[c].time + ';');
-            chapterdiv.appendChild(a);
-      
-            chapterslist.appendChild(chapterdiv);
-          }
-          var chaptersbutton = document.getElementById("chaptersbutton");
-          chaptersbutton.setAttribute('onclick', 'javascript: toggleChapterList();'); //el.classList.toggle('active');
 
-          /*
-          var fsc = document.getElementById("fullscreener");
-          fsc.onclick = function() { var wrapp = document.getElementById("videowrapper"); wrapp.requestFullscreen(); }
-          */
       </script>
 
 </body> 
