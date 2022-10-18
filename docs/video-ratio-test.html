@@ -643,7 +643,7 @@ var applicationID = 'F7FD2183';
 var namespace = 'urn:x-cast:com.boombatower.chromecast-dashboard';
 var session = null;
 
-casttochrome.on("click", function(e) {connect(); e.stopPropagation(); });
+casttochrome.onclick = function(e) {connect(); e.stopPropagation(); };
 //---------------------------
 
 
