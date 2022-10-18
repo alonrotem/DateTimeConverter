@@ -1,8 +1,12 @@
 <!--
+Changelog
+Colors of the logo and chapters and micke book top bar
+mouse hiding controls better
+links from vide to booklet
+
 TODO
-
-Fix horizontal alignment of play/chapters
-
+draggable progress
+popup QR
 -->
 
 <!DOCTYPE html> 
@@ -34,13 +38,11 @@ Fix horizontal alignment of play/chapters
         padding:0;
     }
 
+
     #videowrapper
     {
         width: 100vw; 
-        /*height: 56.25vw; /* 100/56.25 = 1.778 */
-        /*background: pink;*/
-        /*max-height: 100vh;*/
-        height: 100%;
+        height: 100vh;
         max-width: 177.78vh; /* 16/9 = 1.778 */
         margin: auto;
         position: absolute;
@@ -48,53 +50,11 @@ Fix horizontal alignment of play/chapters
         left:0;right:0; /* horizontal center */
 
         /*display: grid;*/
-        grid-template-columns: auto 250px;
-        grid-template-rows: 75px auto;   
-
+        /* grid-template-columns: auto 250px;
+        grid-template-rows: 75px auto;    */
     }
 
-    #videowrapper video
-    {
-      /*
-      grid-row-start: 1;
-      grid-row-end: 3; 
-      grid-column-start: 1;
-      grid-column-end: 3;    
-      */       
-    }
-
-    #customcontrols
-    {
-      /*
-      grid-row-start: 1;
-      grid-row-end: 3; 
-      grid-column-start: 1;
-      grid-column-end: 3;
-      /*background-color: yellow;*/
-
-    }
-
-    #videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *
-    {
-      visibility: hidden;
-      opacity: 0;
-      -webkit-transition: opacity 1s ease-in-out;
-       -moz-transition: opacity 1s ease-in-out;
-        -ms-transition: opacity 1s ease-in-out;
-         -o-transition: opacity 1s ease-in-out;
-            transition: opacity 1s ease-in-out;
-    }
-
-    #videowrapper:hover .custom-control, #videowrapper:hover #logo, #videowrapper:hover #playnav, #videowrapper:hover .visiblenav, #videowrapper:hover .visiblenav *
-    {
-      visibility:visible;
-      opacity: 1;
-    }
-
-    #customcontrols-visible
-    {
-      display: block;
-    }
+/*
 
     .speed-control
     {
@@ -127,7 +87,6 @@ Fix horizontal alignment of play/chapters
     {
       position: absolute;
       top: 40%;
-      /*left: 50%;*/
       display: flex;
       align-items: center;
       justify-content: center;
@@ -138,26 +97,12 @@ Fix horizontal alignment of play/chapters
     {
       font-size: 5vw;
       cursor: pointer;
-      /*margin: 0px 38px;*/
     }
 
     .custom-control i
     {
       text-shadow: 0 0 75px black, 0 0 75px black;
       color: white;
-    }
-
-    #chaptersbutton
-    {
-      grid-row-start: 1;
-      grid-column-start: 2;
-/*background-color: yellow;*/
-    margin-right: 0;
-    margin-left: auto;
-    z-index: 1000;
-    cursor:pointer;
-
-    display:none;
     }
 
     #chaptercontainer
@@ -167,56 +112,10 @@ Fix horizontal alignment of play/chapters
       z-index: 2000;
       display: none;
     }
-    #chapterslist
-    {
-
-      background: rgba(0, 0, 0, 0.5);
-      
-      height: 100%;
-      float: right;
-      /*position: relative;
-      
-      right: -150px;
-      */
-      /*
-      transition-property: right;
-      transition-duration: 0.5s;
-      transition-timing-function: ease-in-out;
-      */
-      display: none;
-      z-index: 0;
-    }
-    #chapterslist div
-    {
-
-    padding: 5px;
-    margin: 5px;
-    }
-
-    #chapterslist div a
-    {
-
-    font-family: arial;
-    color: white;
-    text-decoration: none;
-
-    }
-
-    .shown
-    {
-      right: 0px !important;
-      display: block;
-      z-index: 2000;
-    }
+    
 
 
 
-    #progressindicator {
-      position: absolute;
-      top: -5px;
-      left: 0px;
-      color: #fbe724;
-    }
 
     #watchedbar {
       background-color: #fbe724;
@@ -232,49 +131,61 @@ Fix horizontal alignment of play/chapters
     }
     .progress-chapter
     {
-      width: 10px; 
+      width: 5px; 
       height: 5px; 
-      background: red;
+      background: #0024C3;
       position: absolute;
       top: 0px;
     }
 
+    #prevlinkBtn, #nextlinkBtn
+    {
+      color: #0024C3;
+    }
+
     #logo
     {
-      position: absolute;
-      padding: 20px 10px;
-    }
-    #logo img
-    {
-      width: 30%;
 
     }
+
 
     .activespeed
       {
         background-color: #fbe724;
         color: black;
       }
-    @media all and (orientation:portrait) {
-    /* Style adjustments for portrait mode goes here */
+    @media all and (orientation:portrait)  {
+    /* Style adjustments for portrait mode goes here *//*
     .speed-control
       {
         font-size: 2.0vw;
         padding: 2px;
+        font-weight: bold;
+        margin-left: 5px;             
+        }    
 
-      font-weight: bold;
-      margin-left: 5px;             
-      }    
+        #additionalLinksPanel{
+          top: 20px !important;
+          margin-left: 5px !important;  
+        }
 
-      #speedpanel
-      {
+        #additionalLinksPanel a {
+          font-size: 15px !important;
+        }
 
-      }
+        #additionalLinksPanel div {
+          margin: 7px 0px !important;
+          font-size: 15px !important;
+        }
+
+
+
+
     }
 
     @media (orientation: landscape) and (hover: none) and (pointer: coarse) {
-      /* Style adjustments for landscape mode goes here */
-        #logo
+      /* Style adjustments for landscape mode goes here *//*
+      #logo
       {
         padding: 50px 10px;
 
@@ -292,7 +203,23 @@ Fix horizontal alignment of play/chapters
       
       }
 
+      #additionalLinksPanel{
+      top: 50px !important;
+    }
 
+      #additionalLinksPanel div {
+        margin: 15px 0px !important;
+      }
+
+      #additionalLinksPanel a {
+      font-size: 25px !important;
+    }
+
+
+
+    .modal {
+  padding-top: 0px !important; /* Location of the box *//*
+    }
 
     }
     
@@ -318,14 +245,13 @@ Fix horizontal alignment of play/chapters
       margin: 20px 10px;
     }
 
-    #currentchapterindicator
+    #previouslink, #nextlink
     {
-      background: #fbe724;
-    /* display: inline-block; */
-    position: absolute;
-    padding: 10px;
+      display: inline-block;
+      padding:5px; 
+      cursor: pointer;
     }
-
+*/
     #previouslink, #nextlink, #currentchapterindicator, #progresselapsed, #progresstotal
     {
       -webkit-touch-callout: none; /* Safari */
@@ -334,6 +260,391 @@ Fix horizontal alignment of play/chapters
             -ms-user-select: none; /* Internet Explorer/Edge */
                 user-select: none; 
     }
+/*
+    #additionalLinksPanel{
+      position:absolute; 
+      top: 100px;
+      right: 0; 
+      margin: 20px 10px;
+    }
+
+    #additionalLinksPanel div {
+      margin: 20px 0px;
+      text-align: center;
+      color: #0024C3;
+    }
+
+    #additionalLinksPanel a {
+      font-size: 40px;
+      color: #0024C3;
+      text-decoration: none;
+    }
+
+    #additionalLinksPanel a:visited {
+      color: #0024C3;
+    }
+
+
+  .autohidable
+  {
+    visibility: hidden;
+  }
+
+  .autohidable-visible
+  {
+    visibility: visible !important;
+  }
+*/
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}   
+
+#modal-table
+{
+  width: 100%;
+  border: 0px;
+}
+#modal-table td
+{
+  width:50%;
+  border: 0px;
+  text-align:center;
+}
+
+#modal-table a{
+  color: black;
+  text-decoration: none;
+}
+#modal-table a:visited{
+  color: black;
+}
+
+
+#modal-table img
+{
+  max-width: 100%;
+  width: 100%;
+}
+#modal-table i
+{
+  font-size: 30px;
+}
+
+#modalclose
+{
+  font-size: 25px;
+  color: red;
+}
+
+
+
+
+  /*-----------------------------------*/
+  #customcontrols
+{
+
+  /* background-color: red; */
+  display: grid;
+  grid-template-columns: 33% 34% 33%;
+  grid-template-rows: 15% 18% 34% 18% 15%;
+}
+#customcontrols div
+{
+  display: flex;
+  padding: 3px;
+}
+
+#logo
+{
+  /* background-color: purple; */
+  grid-column: 1/3;
+  grid-row: 1/2;
+  flex-direction: column;  
+}
+#logo img
+{
+height: 60%;
+width: 60%;
+}
+
+#share-options
+{
+  /* background-color: orange; */
+  grid-column: 1/2;
+  grid-row: 2/6;
+  flex-direction: column; 
+}
+
+.svgbutton
+{
+  filter: invert(12%) sepia(78%) saturate(7500%) hue-rotate(235deg) brightness(74%) contrast(111%); /*https://codepen.io/sosuke/pen/Pjoqqp*/
+  height: 40px;
+}
+#sharevideo
+{
+  font-size: 40px;
+  margin-top: 13px;
+  color: #0024C3;
+}
+
+#speed-controls
+{
+  /* background-color: green; */
+  grid-column: 3/4;
+  grid-row: 1/2;
+  justify-content: end;    
+  font-size: 16px;
+}
+#speed-controls-wrapper
+{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between; /*spread left<->right*/
+  align-items: flex-start; /*to top*/
+}
+#speed-controls-wrapper span
+{
+  background-color: black;
+    color: white;
+    font-weight: 900;
+    padding: 5px 10px;
+    border-radius: 14px;
+}
+
+#links
+{
+  /* background-color: pink; */
+  grid-column: 3/4;
+  grid-row: 2/5;
+  flex-direction: column;
+  align-items: end;
+}
+#linkswrpper
+{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+#linkswrpper div
+{
+  font-size: 40px;
+  color: #0024C3;
+}
+#linkswrpper a
+{
+  font-size: 40px;
+  color: #0024C3;
+  text-decoration: none;
+}
+#linkswrpper a:visited
+{
+  color: #0024C3;
+}
+
+#play-controls
+{
+  grid-column: 2/3;
+  grid-row: 3/4;
+  justify-content: center; /*horizontal*/
+  align-items: center; /*vertical*/
+}
+#controls
+{
+  /* background-color: gray; */
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;  
+}
+#controls span
+{
+  cursor: pointer;
+}
+#prevlinkBtn, #nextlinkBtn
+{
+  background-color: yellow;
+  font-size: 20px;
+  padding: 8px 12px;
+  border-radius: 23px;
+}
+#playbutton
+{
+  text-shadow: 0 0 75px black, 0 0 75px black;
+      color: white;
+      font-size: 5vw;
+}
+
+#progress
+{
+  grid-column: 1/4;
+  grid-row: 5/6;
+  justify-content: center; /*horizontal*/
+  align-items: center; /*vertical*/  
+}
+#progress div
+{
+  padding: 0 !important;
+}
+
+#progresscontainer
+{
+  height: 100%;
+  width: 100%;
+  display: grid !important;
+  grid-template-columns:  5% 90% 5%;
+  grid-template-rows: 20% 70%;
+}
+#progresstimers
+{
+  width: 100%;
+  grid-column: 2/3;
+  grid-row: 1/2;
+  justify-content: space-between;
+  margin-bottom: 3px;
+  font-size: 16px;
+}
+#progressbarcontaiener
+{
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+#progressbar
+{
+  background-color: white;
+  box-shadow: 0px 0px 20px black;
+  height: 3px;
+  width: 100%;
+}
+
+
+
+
+#progressindicator {
+  position: absolute;
+  top: -5px;
+  left: 0px;
+  color: #fbe724;
+}
+
+/* ============================*/
+/* RESPONSIVENESS */
+@media (max-width: 1024px){
+  #linkswrpper div
+  {
+    font-size: 30px;
+    color: red !important;
+  }
+  #linkswrpper a
+  {
+    font-size: 30px;
+    color: red !important;
+  }
+  .svgbutton
+  {
+    filter: invert(19%) sepia(87%) saturate(7488%) hue-rotate(358deg) brightness(104%) contrast(112%) !important;
+    height: 30px;
+  }
+  #sharevideo
+  {
+    font-size: 30px;
+    margin-top: 13px;
+    color: red !important;
+  }
+
+  #progresscontainer {
+    grid-template-rows: 40% 60%;
+  }
+  #progresstimers
+  {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 556px) and (max-width: 770px){
+  #speed-controls
+  {
+    font-size: 13px;
+  }
+
+#speed-controls-wrapper span 
+  {
+    padding: 3px 8px;
+  }
+  
+}
+@media (max-width: 555px)
+{
+  #speed-controls
+  {
+    font-size: 10px;
+  }
+
+#speed-controls-wrapper span 
+  {
+    padding: 2px 6px;
+  }
+
+}
+
+@media (max-width: 555px)
+{
+
+
+  #speed-controls {
+      grid-column: 2/4;
+  }
+
+  #linkswrpper div
+  {
+    font-size: 20px;
+    color: orange !important;
+  }
+  #linkswrpper a
+  {
+    font-size: 20px;
+    color: orange !important;
+  }
+  .svgbutton
+  {
+    filter: invert(19%) sepia(87%) saturate(7488%) hue-rotate(358deg) brightness(104%) contrast(112%) !important;
+    height: 20px;
+  }
+  #sharevideo
+  {
+    font-size: 20px;
+    color: orange !important;
+  } 
+  #progresscontainer {
+    grid-template-rows: 50% 50%;
+}
+
+}
+/*-------------------------------------------------*/
 
   </style>
 </head>
@@ -341,63 +652,74 @@ Fix horizontal alignment of play/chapters
 		<!-- source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4" -->
 
     <div id="videowrapper">
-
-      
       <div style="margin: auto;
       position: relative; display: flex; height:100%;
     align-items: center;">
 
-      <video id="ikeavideo" width="100%" autoplay muted lopo style="position:absolute">
+      <video id="ikeavideo" width="100%" autoplay muted loop playsinline style="position:absolute">
         <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4">
         Your browser does not support HTML video.
       </video>
 
-      <div id="customcontrols" style="position:absolute;">
+      <div id="customcontrols" style="position:absolute; ">
         <div id="logo">
-        <img src="imgs/ikeanimation.png" />
-        <div id="currentchapterindicator"></div>
+          <img src="imgs/ikeanimation.png" />
         </div>
-        <!--<div id="customfullscreen" style="z-index: 90000; position:relative; top: 100px;" class="custom-control"><i class="fa-solid fa-expand"></i></div>
-        <div class="custom-control"><i class="fa-solid fa-minimize"></i></div>-->
-
-        <div id="playnav">
-        <div style="width:50%; text-align: center;"><div class="custom-contro" id="previouslink"  style="background-color: yellow; display:inline-block; padding:5px; cursor: pointer;"><i class="fa-solid fa-backward-step"></i><span id="prevlinkText" style="margin-left: 5px;"><!--PREVIOUS--></span></div></div>
-        <div id="customplaypause" class="custom-control"><i id="playbutton" class="fa-solid fa-pause"></i></div>
-        <div  style="width:50%; text-align: center;"><div class="custom-contro" id="nextlink" style="background-color: yellow; display:inline-block; padding:5px; cursor: pointer;"><span id="nextlinkText" style="margin-right: 5px;"><!--Next--></span><i class="fa-solid fa-forward-step"></i></div></div>
-        </div>
-
-
-        <div id="speedpanel">
-          <div id="speed05" class="custom-control speed-control" data-speed="0.5">0.5x</div>
-          <div id="speed10" class="custom-control speed-control" data-speed="1.0">1.0x</div>
-          <div  id="speed125" class="custom-control speed-control" data-speed="1.25">1.25x</div>
-          <div  id="speed15" class="custom-control speed-control" data-speed="1.5">1.5x</div>
-          <div  id="speed20" class="custom-control speed-control" data-speed="2.0">2.0x</div>
-      </div>
-        <div class="custom-control progressbar">
-
-          <div id="customfullscreen" style="z-index: 90000;position: absolute;top: -47px;/* color: blue; */right: 0;" class="custom-control"><i id="fullscreenicon" class="fa-solid fa-expand" style="    color: black;
-            font-size: 2.0vw;"></i></div>
-
-          <div id="progresselapsed"><!--Elapsed--></div>
-          <div id="progresstotal"><!--Total--></div>
-          <div id="watchedbar"></div>
-          <div id="chapterbar">
-
+      <div id="share-options">
+          <div id="casttochrome">
+            <img id="castlogo" src="imgs/Chromecast.svg" class="svgbutton" />
           </div>
-          <i id="progressindicator" class="fa-solid fa-circle"></i>
-        </div>
-
-
+          <div id="sharevideo">
+            <i class="fa-solid fa-share-nodes"></i>
+          </div>
       </div>
-
-      <div id="chaptersbutton">
-        <img src="imgs/list-light.png" />
-      </div>
-      <div id="chaptercontainer">
-        <div id="chapterslist">
-          
+      
+        <div id="speed-controls">
+          <div id="speed-controls-wrapper">
+            <span>0.5x</span>
+            <span>1.0x</span>
+            <span>1.25x</span>
+            <span>1.5x</span>
+          </div>
         </div>
+        
+        <div id="links">
+          <div id="linkswrpper">
+          <div>
+            <a href="micke.html" target="_blank"><i class="fa-solid fa-book-open"></i></a>
+          </div>
+          <div>
+            <a href="micke-desk-oak-effect__AA-476633-11-2.pdf"><i class="fa-solid fa-file-pdf"></i></a>
+          </div>
+          <div>
+            <a id="btnOpenModal" href="#"><i class="fa-solid fa-qrcode"></i></a>
+          </div>
+          <div>
+            <i id="fullscreenicon" class="fa-solid fa-expand"></i>
+          </div>
+          </div>
+        </div>
+        
+        <div id="play-controls">
+          <div id="controls">
+            <span><i  id="prevlinkBtn" class="fa-solid fa-backward-step"></i></span>
+            <span><i id="playbutton" class="fa-solid fa-pause"></i></span>
+            <span><i id="nextlinkBtn" class="fa-solid fa-forward-step"></i></span>
+          </div>
+        </div>
+        
+        <div id="progress">
+          <div id="progresscontainer">
+            <div id="progresstimers">
+              <span>00:00:00</span>
+              <span>01:29:42</span>
+            </div>
+            <div id="progressbarcontaiener">
+              <div id="progressbar"></div>
+            </div>
+          </div>
+        </div>
+        
       </div>
 
 </div>
@@ -406,6 +728,44 @@ Fix horizontal alignment of play/chapters
 
       <!--<div style="position:fixed; z-index:9000; top:0; right:500; background-color:chartreuse;" id="fullscreener">EXPERIMENT</div>-->
 
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div><span id="modalclose" class="close"><i class="fa-solid fa-circle-xmark"></i></span></div>
+    <div>
+     <table id="modal-table">
+      <tr>
+        <td>
+          <a href="micke.html" target="_blank">
+          <img src="imgs/qr-flipbook.jpg" />
+          </a>
+        </td>
+        <td>
+          <a href="micke-desk-oak-effect__AA-476633-11-2.pdf">
+          <img src="imgs/qr-pdf.jpg" />
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="micke.html" target="_blank">
+          <i class="fa-solid fa-book-open"></i>
+          </a>
+        </td>
+        <td>
+          <a href="micke-desk-oak-effect__AA-476633-11-2.pdf">
+          <i class="fa-solid fa-file-pdf"></i>
+          </a>
+        </td>
+      </tr>
+     </table>
+    </div>
+  </div>
+
+</div>
+<i id="progressindicator" class="fa-solid fa-circle"></i>
       <script>
 /*
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -426,12 +786,16 @@ else
   var customfullscreen = document.getElementById("customfullscreen");
   var fullscreenicon = document.getElementById("fullscreenicon");
   var videowrapper = document.getElementById("videowrapper");
-  var currentchapterindicator = document.getElementById("currentchapterindicator");
+  var btnOpenModal = document.getElementById("btnOpenModal");
+  var myModal = document.getElementById("myModal");
+  var modalClose = document.getElementsByClassName("close")[0];
 
   var previouslink = document.getElementById("previouslink");
   var prevlinkText = document.getElementById("prevlinkText");
   var nextlink = document.getElementById("nextlink");
   var nextlinkText = document.getElementById("nextlinkText");
+  var prevlinkBtn = document.getElementById("prevlinkBtn");
+  var nextlinkBtn = document.getElementById("nextlinkBtn");
 
   var speed05 = document.getElementById("speed05");
   var speed10 = document.getElementById("speed10");
@@ -440,79 +804,119 @@ else
   var speed20 = document.getElementById("speed20");
   var speeds = ["05", "10", "125", "15", "20"];
 
-  speed05.onclick = function(){ setSpeed("05"); };
-  speed10.onclick = function(){ setSpeed("10"); };
-  speed125.onclick = function(){ setSpeed("125"); };
-  speed15.onclick = function(){ setSpeed("15"); };
-  speed20.onclick = function(){ setSpeed("20"); };
+  // speed05.onclick = function(){ setSpeed("05"); };
+  // speed10.onclick = function(){ setSpeed("10"); };
+  // speed125.onclick = function(){ setSpeed("125"); };
+  // speed15.onclick = function(){ setSpeed("15"); };
+  // speed20.onclick = function(){ setSpeed("20"); };
 
-  previouslink.onclick = function(){ var info = getChapters(); if(info.previouslinktime > -1) { ikeavideo.currentTime =  info.previouslinktime } };
-  nextlink.onclick = function(){ var info = getChapters(); if(info.nextlinktime > -1) { ikeavideo.currentTime =  info.nextlinktime } };
+  // previouslink.onclick = function(){ var info = getChapters(); if(info.previouslinktime > -1) { ikeavideo.currentTime =  info.previouslinktime } };
+  // nextlink.onclick = function(){ var info = getChapters(); if(info.nextlinktime > -1) { ikeavideo.currentTime =  info.nextlinktime } };
 
-  //#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *
-  var autohideselector = "#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *";
-  $(document).on("touchend click", function(){
-    $ (autohideselector).show();
-    hideMenu(); //hide again after 2 seconds
-  });
+  var initialstatevideoplaying = false;
+  //btnOpenModal.onclick = function(){ initialstatevideoplaying = (!ikeavideo.paused && !ikeavideo.ended); pauseVideo();  myModal.style.display = "block"; };
 
-  function hideMenu(){
-    setTimeout( function(){
-      $ (autohideselector).fadeOut(1500);
-    }, 4000);
+  modalClose.onclick = function() {
+    myModal.style.display = "none";
+    if(initialstatevideoplaying)
+    {
+      playVideo();
+    }
 }
 
-  customfullscreen.onclick = function(){
-    //videowrapper.requestFullscreen();
-    if (document.fullscreenElement) {
-		  document.exitFullscreen();
-      fullscreenicon.classList.add("fa-expand");
-      fullscreenicon.classList.remove("fa-minimize");
-    } else {
-      videowrapper.requestFullscreen();
-      fullscreenicon.classList.add("fa-minimize");
-      fullscreenicon.classList.remove("fa-expand");
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == myModal) {
+    myModal.style.display = "none";
+    if(initialstatevideoplaying)
+    {
+      playVideo();
     }    
-  };
+  }
+}
+
+
+  var readytoplay = false;
+
+  //#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #videowrapper .visiblenav, #videowrapper .visiblenav *
+  //var autohideselector = "#videowrapper .custom-control, #videowrapper #logo, #videowrapper #playnav, #customplaypause, #videowrapper .visiblenav, #videowrapper .visiblenav *";
+  var autohideselector = ".autohidable";
+  $(document).on("touchend", function(){
+    if(readytoplay)
+    {
+      showControls();
+    }
+  });
+
+  function showControls(keepOn)
+  {
+      $(autohideselector).hide();
+      $(autohideselector).addClass("autohidable-visible");
+      $(autohideselector).show();
+      if(!keepOn)
+      {
+        hideControlsAfterABit(); //hide again after 2 seconds
+      }
+  }
+
+  function hideControlsAfterABit(){
+    setTimeout(function(){
+      $ (autohideselector).fadeOut(1500, function(){
+        $(autohideselector).removeClass("autohidable-visible");
+      });
+    }, 2000);
+  }
+  var timer; 
+
+  $('body').mousemove(function() {
+    if(readytoplay)
+    {
+      showControls();
+      clearTimeout(timer);
+      timer=setTimeout(hideControlsAfterABit,300);
+    }
+  });
+
+
+  // customfullscreen.onclick = function(){
+  //   //videowrapper.requestFullscreen();
+  //   if (document.fullscreenElement) {
+	// 	  document.exitFullscreen();
+  //     fullscreenicon.classList.add("fa-expand");
+  //     fullscreenicon.classList.remove("fa-minimize");
+  //   } else {
+  //     videowrapper.requestFullscreen();
+  //     fullscreenicon.classList.add("fa-minimize");
+  //     fullscreenicon.classList.remove("fa-expand");
+  //   }    
+  // };
 
   function setSpeed(speed)
   {
-    for (var s=0; s < speeds.length; s++)
-    {
-      var speedbtn = document.getElementById("speed" + speeds[s]);
-      if(speed==speeds[s])
-      {
-        speedbtn.classList.add("activespeed");
-        ikeavideo.playbackRate = speedbtn.getAttribute("data-speed");
-      }
-      else
-      {
-        speedbtn.classList.remove("activespeed");
-      }
-    }
+    // for (var s=0; s < speeds.length; s++)
+    // {
+    //   var speedbtn = document.getElementById("speed" + speeds[s]);
+    //   if(speed==speeds[s])
+    //   {
+    //     speedbtn.classList.add("activespeed");
+    //     ikeavideo.playbackRate = speedbtn.getAttribute("data-speed");
+    //   }
+    //   else
+    //   {
+    //     speedbtn.classList.remove("activespeed");
+    //   }
+    // }
   }
 
 function resetHeight(){
     // reset the body height to that of the inner browser
-    document.body.style.height = window.innerHeight + "px";
+    document.body.style.height = (window.innerHeight - 250) + "px";
     document.getElementById("customcontrols").style.width = (ikeavideo.clientWidth)+"px"; 
-    document.getElementById("customcontrols").style.height = (ikeavideo.clientHeight)+"px";
+    //alert("ikeavideo.clientHeight: " + ikeavideo.clientHeight + ", screen.height: " + screen.height)
+    document.getElementById("customcontrols").style.height = $(document).height() + "px";//(ikeavideo.clientHeight)+"px";
 }
 // reset the height whenever the window's resized
-window.addEventListener("resize", resetHeight);
-// called to initially set the height.
-
-        /*
-var viewportHeight = window.screen.height //* window.devicePixelRatio;//window.innerHeight;
-var viewportWidth =  window.screen.width //* window.devicePixelRatio; //window.innerWidth;
-
-alert("videowrapper.style.height = " + (viewportHeight*100/viewportWidth).toFixed(2) + "vw; videowrapper.style.maxWidth = " + (viewportWidth*100/viewportHeight).toFixed(2) + "vh");
-var vwap = document.getElementById("videowrapper");
-
-vwap.style.height = (viewportHeight*100/viewportWidth).toFixed(2) + "vw";//* 100/56.25 = 1.778
-vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 16/9 = 1.778 
-*/
-
+  window.addEventListener("resize", resetHeight);
 
         var chapters = [
             {
@@ -539,7 +943,7 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 
                 label: "Design options",
                   time: 304
               }        
-          ]
+          ];
           
           function getChapters()
           {
@@ -582,56 +986,73 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 
           // contols visible on hover
           // visible on tap
           //if touched - restart count
-
+          ikeavideo.onplay = function() {
+            $ (autohideselector).hide();
+            /*$("#playnav *, .progressbar *").css({ visibility: "visible" });*/
+            
+            //TEMP: PAUSE after 2 seconds!
+            setTimeout(function(){
+                ikeavideo.pause();
+              }, 2000);
+          };
           
           ikeavideo.oncanplay = function () { 
-            progresstotal.textContent = formatTime(ikeavideo.duration); 
+            
+            // progresstotal.textContent = formatTime(ikeavideo.duration); 
 
-            for (var c=0; c < chapters.length; c++)
-            {
-              if(chapters[c].time <= ikeavideo.duration)
-              {
-                var chapterdiv = document.createElement('div');
-                chapterdiv.setAttribute("data-label", chapters[c].label);
-                chapterdiv.setAttribute("data-jumpto", chapters[c].time);
-                chapterdiv.className = "progress-chapter";
-                chapterdiv.style.left = (chapters[c].time * 100 / ikeavideo.duration) + "%";
-                chapterbar.appendChild(chapterdiv);
-              }
-            }
+            // for (var c=0; c < chapters.length; c++)
+            // {
+            //   if(chapters[c].time <= ikeavideo.duration)
+            //   {
+            //     var chapterdiv = document.createElement('div');
+            //     chapterdiv.setAttribute("data-label", chapters[c].label);
+            //     chapterdiv.setAttribute("data-jumpto", chapters[c].time);
+            //     chapterdiv.className = "progress-chapter";
+            //     chapterdiv.style.left = (chapters[c].time * 100 / ikeavideo.duration) + "%";
+            //     chapterbar.appendChild(chapterdiv);
+            //   }
+            // }
             resetHeight();
+            readytoplay = true;
+            console.log("controls are set");
             setSpeed("10");
           };
           
           ikeavideo.ontimeupdate = function () {
-            progresselapsed.textContent = formatTime(ikeavideo.currentTime);
-            var prcposition = (ikeavideo.currentTime * 100 / ikeavideo.duration) + "%";
-            progressindicator.style.left = prcposition;
-            watchedbar.style.width = prcposition;
+            // progresselapsed.textContent = formatTime(ikeavideo.currentTime);
+            // var prcposition = (ikeavideo.currentTime * 100 / ikeavideo.duration) + "%";
+            // progressindicator.style.left = prcposition;
+            // watchedbar.style.width = prcposition;
             
-            var cpt = getChapters();
-            currentchapterindicator.textContent = cpt.current;
-            prevlinkText.textContent = cpt.previous;
-            nextlinkText.textContent = cpt.next;
-
-            if(cpt.previous)
-            {
-              previouslink.classList.add("visiblenav");//.style.visibility = "visible";
-            }
-            else
-            {
-              previouslink.classList.remove("visiblenav");//.style.visibility = "hidden";
-
-            }
-            if(cpt.next)
-            {
-              nextlink.classList.add("visiblenav");//.style.visibility = "visible";
-            }
-            else
-            {
-              nextlink.classList.remove("visiblenav");//.style.visibility = "hidden";
-
-            }            
+            // var cpt = getChapters();
+            // /*
+            // prevlinkText.textContent = cpt.previous;
+            // nextlinkText.textContent = cpt.next;
+            // */
+            // if(cpt.previous)
+            // {
+            //   previouslink.classList.add("visiblenav");//.style.visibility = "visible";
+            //   prevlinkBtn.classList.add("visiblenav");
+            //   prevlinkBtn.classList.add("visiblenav");
+            // }
+            // else
+            // {
+            //   previouslink.classList.remove("visiblenav");//.style.visibility = "hidden";
+            //   prevlinkBtn.classList.remove("visiblenav");
+            //   prevlinkBtn.classList.remove("visiblenav");
+            // }
+            // if(cpt.next)
+            // {
+            //   nextlink.classList.add("visiblenav");//.style.visibility = "visible";
+            //   nextlinkBtn.classList.add("visiblenav");
+            //   nextlinkBtn.classList.add("visiblenav");
+            // }
+            // else
+            // {
+            //   nextlink.classList.remove("visiblenav");//.style.visibility = "hidden";
+            //   nextlinkBtn.classList.remove("visiblenav");
+            //   nextlinkBtn.classList.remove("visiblenav");
+            // }            
 
           }
 
@@ -663,62 +1084,35 @@ vwap.style.maxWidth = (viewportWidth*100/viewportHeight).toFixed(2) + "vh"; //* 
             return numstr.substr(numstr.length - cutout_len, cutout_len);
           }
 
-          var playButton = document.getElementById('playbutton');
-          playButton.onclick = togglePlay;
+          // var playButton = document.getElementById('playbutton');
+          // playButton.onclick = togglePlay;
 
           function togglePlay() {
           if (ikeavideo.paused || ikeavideo.ended) {
+            playVideo();
+          } else {
+            pauseVideo();
+          }
+        }
+
+          function playVideo()
+          {
             ikeavideo.play();
             playButton.classList.remove("fa-play");
-            playButton.classList.add("fa-pause");            
-          } else {
+            playButton.classList.add("fa-pause"); 
+          }
+
+          function pauseVideo()
+          {
             ikeavideo.pause();
             playButton.classList.add("fa-play");
             playButton.classList.remove("fa-pause");
           }
-        }
+
 
 
 //========================================================
-          function toggleChapterList()
-          {
-            var chapterlist = $('#chapterslist');
-            var chaptercontainer = $("#chaptercontainer");
-            if (chapterlist.is(":visible"))
-            {
-              chapterlist.hide('slide', {direction: 'right'}, 400, function (){ chaptercontainer.hide(); });
-              
-            }
-            else
-            {
-              chaptercontainer.show();
-              chapterlist.show('slide', {direction: 'right'}, 400);
-            }  
-      
-          }
-          //alert(chapters["beginning"].label)
-        var chapterslist = document.getElementById("chapterslist");
-        for (var c=0; c < chapters.length; c++)
-          {
-            var chapterdiv=document.createElement('div');
-      
-            var a = document.createElement('a');
-            var linkText = document.createTextNode(chapters[c].label);
-            a.appendChild(linkText);
-            a.title = chapters[c].label;
-            a.href = "javascript:void(0)";
-            a.setAttribute('onclick', 'javascript:document.getElementById("ikeavideo").currentTime = ' + chapters[c].time + ';');
-            chapterdiv.appendChild(a);
-      
-            chapterslist.appendChild(chapterdiv);
-          }
-          var chaptersbutton = document.getElementById("chaptersbutton");
-          chaptersbutton.setAttribute('onclick', 'javascript: toggleChapterList();'); //el.classList.toggle('active');
 
-          /*
-          var fsc = document.getElementById("fullscreener");
-          fsc.onclick = function() { var wrapp = document.getElementById("videowrapper"); wrapp.requestFullscreen(); }
-          */
       </script>
 
 </body> 

@@ -639,15 +639,18 @@ speed15.onclick = function(e){ setSpeed("15"); e.stopPropagation(); };
 speed20.onclick = function(e){ setSpeed("20"); e.stopPropagation(); };
 
 //------cast-----------------
+//https://developer.chrome.com/blog/presentation-api/
+//https://boombatower.github.io/chromecast-dashboard/sender/
+
 var applicationID = 'F7FD2183';
 var namespace = 'urn:x-cast:com.boombatower.chromecast-dashboard';
 var session = null;
 
-if (!chrome.cast || !chrome.cast.isAvailable) {
-      setTimeout(initializeCastApi, 1000);
-}
+//if (!chrome.cast || !chrome.cast.isAvailable) {
+//      setTimeout(initializeCastApi, 1000);
+//}
 
-casttochrome.onclick = function(e) {connect(); e.stopPropagation(); };
+//casttochrome.onclick = function(e) {connect(); e.stopPropagation(); };
 //---------------------------
 
 
