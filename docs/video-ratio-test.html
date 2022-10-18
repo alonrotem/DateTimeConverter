@@ -459,7 +459,7 @@ width: 60%;
               <img src="imgs/ikeanimation.png" />
             </div>
           <div id="share-options">
-              <div id="casttochrome" class="js-cast">
+              <div id="casttochrome">
                 <img id="castlogo" src="imgs/Chromecast.svg" class="svgbutton" />
               </div>
               <div id="sharevideo">
@@ -743,7 +743,7 @@ function connectToSession() {
 
 function buttonEvents() {
   casttochrome.addEventListener('click', function(e) {
-    if(e.target.classList.contains('js-cast')) {
+    if(e.target.id=="casttochrome") {
       launchApp(); 
       e.stopPropagation();
     }
