@@ -643,6 +643,10 @@ var applicationID = 'F7FD2183';
 var namespace = 'urn:x-cast:com.boombatower.chromecast-dashboard';
 var session = null;
 
+if (!chrome.cast || !chrome.cast.isAvailable) {
+      setTimeout(initializeCastApi, 1000);
+}
+
 casttochrome.onclick = function(e) {connect(); e.stopPropagation(); };
 //---------------------------
 
@@ -744,9 +748,7 @@ ikeavideo.oncanplay = function () {
     }
     $("#loader").fadeOut(500, function(){ ikeavideo.play(); readytoplay = true; });
 
-    if (!chrome.cast || !chrome.cast.isAvailable) {
-      setTimeout(initializeCastApi, 1000);
-}
+
 
  }
 }
