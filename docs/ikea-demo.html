@@ -467,7 +467,9 @@ TODO
   </div>
 
   <video id="ikeavideo" width="100%" autoplay muted loop playsinline style="position:absolute" class="hiddenfirst">
-    <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4">
+    <!-- <source src="https://www.dropbox.com/s/9f108u4irusk17q/ikea_edit.mp4?raw=1" type="video/mp4"> -->
+    <source id="videosrc" src="https://github.com/alonrotem/ikeanimation-storage/blob/main/videos/ikea_edit.mp4?raw=true" type="video/mp4">
+    
     Your browser does not support HTML video.
   </video>
         
@@ -1017,6 +1019,14 @@ function exitFullscreen()
             return chapterInfo;
           }        
 //------cast-------------------------------
+// working example https://codepen.io/miyukki/pen/dPXeKG
+
+//https://www.wonderplugin.com/online-tools/google-drive-direct-link-generator/
+//API KEY: AIzaSyA5prVHx1qgc5FVOkBSsBXGb29SFwa8ocI
+//Direct GDrive link
+// https://www.googleapis.com/drive/v3/files/1-Pqtg4UBFv210FRHbCm1_30d1y7udrar?alt=media&key=AIzaSyA5prVHx1qgc5FVOkBSsBXGb29SFwa8ocI
+
+
 window['__onGCastApiAvailable'] = function(isAvailable) {
   if (isAvailable) {
     initializeCastApi();
@@ -1029,9 +1039,10 @@ initializeCastApi = function() {
   });
 };
 $("#cast-button").on("click", function(){
-  //alert("casting!");
+  var vid = document.getElementById("videosrc").getAttribute("src");
+  alert("casting!" + vid);
   var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
-  var mediaInfo = new chrome.cast.media.MediaInfo(ikeavideo.getAttribute("src"), 'video/mp4');
+  var mediaInfo = new chrome.cast.media.MediaInfo(vid, 'video/mp4');
 var request = new chrome.cast.media.LoadRequest(mediaInfo);
 castSession.loadMedia(request).then(
   function() { console.log('Load succeed'); },
