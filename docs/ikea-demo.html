@@ -1029,9 +1029,9 @@ initializeCastApi = function() {
   });
 };
 $("#cast-button").on("click", function(){
-  alert("casting!");
+  //alert("casting!");
   var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
-  var mediaInfo = new chrome.cast.media.MediaInfo(ikeavideo.getAttribute("src"));//, contentType);
+  var mediaInfo = new chrome.cast.media.MediaInfo(ikeavideo.getAttribute("src"), 'video/mp4');
 var request = new chrome.cast.media.LoadRequest(mediaInfo);
 castSession.loadMedia(request).then(
   function() { console.log('Load succeed'); },
