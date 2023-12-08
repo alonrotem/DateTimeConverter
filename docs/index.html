@@ -12,7 +12,7 @@
 <html>
     <head>
       <meta charset="utf-8"/>
-      <meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0" />
+      <meta name="viewport" content="user-scalabel=no,initial-scale=1.0,maximum-scale=1.0" />
       
       <link rel="manifest" href="manifest.webmanifest">
       <meta property="og:url"                content="http://alonrotem.github.io/DateTimeConverter/" />
@@ -72,7 +72,7 @@
               font-size: 30px;
             }
             
-            #remotecomputertimePick
+            #remotecomputertimePick, #currentTimePick
             {
               padding: 2px;
             }
@@ -152,12 +152,18 @@
 
             <div class="row radio-options-row">
 
-              <div class="tabletitle"><lablel for="currentTime">זמן נוכחי:</lable></div>
-              <div class="font-weight-light" id="currentTime"></div>
+              <div class="tabletitle"><label for="currentTime">זמן נוכחי:</label></div>
+              <!--<div class="font-weight-light" id="currentTime"></div>-->
+              <div>
+                <input class="dtpicker d-show" id="currentTime">
+                <span id="currentTimePick">
+                  <i class="far fa-calendar-alt"></i>
+                </span>
+              </div>              
             </div>
 
             <div class="row radio-options-row">
-              <div class="tabletitle"><lablel for="remoteTime">זמן מחשב מרוחק:</lable></div>
+              <div class="tabletitle"><label for="remoteTime">זמן מחשב מרוחק:</label></div>
               <div>
                 <input class="dtpicker d-show" id="remoteTime">
                 <span id="remotecomputertimePick">
@@ -167,7 +173,7 @@
             </div>
 
             <div class="row radio-options-row">
-              <div class="tabletitle"><lablel for="remoteTime">הפרש זמן:</lable></div>
+              <div class="tabletitle"><label for="remotetimeDiff">הפרש זמן:</label></div>
               <div id="remotetimeDiff"></div>
             </div>
 </div>
@@ -186,11 +192,11 @@
                 <option value="earlier">מקדים ב-</option>
               </select>
               <input id="manualDiffDays" type="number" class="numberInput" placeholder="0">
-              <label for="manualDiffDays">ימים, </lable>
+              <label for="manualDiffDays">ימים, </label>
               <input id="manualDiffHours" type="number" class="numberInput" placeholder="0">
-              <label for="manualDiffHours">שעות, </lable>
+              <label for="manualDiffHours">שעות, </label>
               <input id="manualDiffMinutes" type="number" class="numberInput" placeholder="0">
-              <label for="manualDiffMinutes">דקות</lable>
+              <label for="manualDiffMinutes">דקות</label>
             </div>            
 </div>
           </div>
@@ -201,7 +207,7 @@
           <legend class="w-auto">חישוב זמן אירוע</legend>
           <div class="container">
             <div class="row">
-              <div class="tabletitle"><lablel for="remoteTime">זמן אירוע רשום:</lable></div>
+              <div class="tabletitle"><labell for="remoteTime">זמן אירוע רשום:</label></div>
                 <div>
                   <input class="dtpicker d-show" id="eventTime">
                   <span id="eventTimePick">
@@ -211,7 +217,7 @@
             </div>
             
             <div class="row">
-            <div class="tabletitle"><lablel for="remoteTime">זמן אירוע אמיתי (מחושב):</lable></div>
+            <div class="tabletitle"><labell for="remoteTime">זמן אירוע אמיתי (מחושב):</label></div>
               <div id="eventTimeCalculate"></div>
             </div>
           </div>          
@@ -239,40 +245,8 @@
       
                 <script type="text/javascript">
 
+var currentTimeChanged = false;
 addToHomescreen();
-/*
-var deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', function(e) {
-  console.log('beforeinstallprompt Event fired');
-  e.preventDefault();
-
-  // Stash the event so it can be triggered later.
-  deferredPrompt = e;
-
-  return false;
-});
-
-var btnAdd = document.getElementById("btnAdd");
-btnAdd.addEventListener('click', (e) => {
-  // hide our user interface that shows our A2HS button
-  btnAdd.style.display = 'none';
-
-  // Show the prompt
-  deferredPrompt.prompt();
-
-  // Wait for the user to respond to the prompt
-  deferredPrompt.userChoice
-    .then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt');
-      } else {
-        console.log('User dismissed the A2HS prompt');
-      }
-      deferredPrompt = null;
-    });
-});
-*/
 
 $( function() {
 $.timepicker.regional['he'] = {
@@ -292,223 +266,240 @@ $.timepicker.regional['he'] = {
 };
 $.timepicker.setDefaults($.timepicker.regional['he']);
 
-    $(".dtpicker").datetimepicker({
-    	isRTL: true,
-      showButtonPanel: true,
-      timeInput: true,
-      controlType: "select",
-      dateFormat: "יום DD, dd/mm/yy"
-    });
+
+$(".dtpicker").datetimepicker({
+  isRTL: true,
+  showButtonPanel: true,
+  timeInput: true,
+  controlType: "select",
+  dateFormat: "יום DD, dd/mm/yy"
+});
+
+$("#currentTime").datetimepicker("option", { onClose : function(dateText) 
+  { 
+    if(dateText != "") {
+      currentTimeChanged = true;
+    }
+  } 
+});
 
 
+$("#eventTimePick").click(function(){
+  $("#eventTime").datepicker("show");
+});
 
-    $("#eventTimePick").click(function(){
-      $("#eventTime").datepicker("show");
-    });
+$('input:radio[name="timeDiffRadios"]').change(function() {
+  setFormOptionsByMode();
+});
 
-    $('input:radio[name="timeDiffRadios"]').change(function() {
-      setFormOptionsByMode();
-    });
+setFormOptionsByMode();
+showCurrentTime();
+});
 
-    setFormOptionsByMode();
+function setFormOptionsByMode()
+{
+  var autoMode = ($('input:radio[name="timeDiffRadios"]:checked').val() == "timeDiffRadioCalculated");
+    $("#manualDiffDays").prop("disabled", autoMode);
+    $("#manualDiffHours").prop("disabled", autoMode);
+    $("#manualDiffMinutes").prop("disabled", autoMode);
+    $("#manualDiffDirection").prop("disabled", autoMode);
+    $("#currentTime").prop("disabled", !autoMode );
+    $("#remoteTime").prop("disabled", !autoMode );
+    if(autoMode)
+    {
+      $("#section-auto").removeClass("text-muted");
+      $("#section-manual").addClass("text-muted");
+
+      $("#currentTimePick").click(function(){
+        $("#currentTime").datepicker("show");
+      });
+      
+      $("#remotecomputertimePick").click(function(){
+        $("#remoteTime").datepicker("show");
+      });
+    }
+    else
+    {
+      $("#section-auto").addClass("text-muted");
+      $("#section-manual").removeClass("text-muted");
+
+      $("#currentTimePick").off();
+      $("#remotecomputertimePick").off();
+    }
+
     showCurrentTime();
-  });
+}
 
-  function setFormOptionsByMode()
-  {
-    var autoMode = ($('input:radio[name="timeDiffRadios"]:checked').val() == "timeDiffRadioCalculated");
-      $("#manualDiffDays").prop("disabled", autoMode);
-      $("#manualDiffHours").prop("disabled", autoMode);
-      $("#manualDiffMinutes").prop("disabled", autoMode);
-      $("#manualDiffDirection").prop("disabled", autoMode);
-      $("#remoteTime").prop("disabled", !autoMode );
-      if(autoMode)
-      {
-        $("#section-auto").removeClass("text-muted");
-        $("#section-manual").addClass("text-muted");
-        $("#remotecomputertimePick").click(function(){
-          $("#remoteTime").datepicker("show");
-        });
-      }
-      else
-      {
-        $("#section-auto").addClass("text-muted");
-        $("#section-manual").removeClass("text-muted");
+function dateToHebrewtring(date)
+{
+  //var date = new Date();
+  var h = date.getHours(); // 0 - 23
+  var m = date.getMinutes(); // 0 - 59
+  var s = date.getSeconds(); // 0 - 59
 
-        $("#remotecomputertimePick").off();
-      }
+  h = (h < 10) ? "0" + h : h;
+  m = (m < 10) ? "0" + m : m;
+  //s = (s < 10) ? "0" + s : s;
 
-      showCurrentTime();
-  }
+  var hebdate = date.toLocaleDateString("he-HE",  { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' }).split('.').join('/');
+  return hebdate + " " + h + ":" + m;// + ":" + s;
+}
 
-  function dateToHebrewtring(date)
-  {
-    //var date = new Date();
-    var h = date.getHours(); // 0 - 23
-    var m = date.getMinutes(); // 0 - 59
-    var s = date.getSeconds(); // 0 - 59
-
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-    //s = (s < 10) ? "0" + s : s;
-
-    var hebdate = date.toLocaleDateString("he-HE",  { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
-    return hebdate + " " + h + ":" + m;// + ":" + s;
-  }
-
-  function showCurrentTime()
-  {
-    document.getElementById("currentTime").innerText = dateToHebrewtring(new Date());
+function showCurrentTime()
+{
+  if(!currentTimeChanged) {
+    document.getElementById("currentTime").value = dateToHebrewtring(new Date());
     recalculate();
     setTimeout(showCurrentTime, 1000);
   }
+}
 
-  function recalculate()
+function recalculate()
+{
+  var autoMode = ($('input:radio[name="timeDiffRadios"]:checked').val() == "timeDiffRadioCalculated");
+  var diffInMinutes = 0;
+  var now = $("#currentTime").datepicker('getDate');
+  var remoteComputerTime = $("#remoteTime").datepicker('getDate');
+  var eventComputerTime = $("#eventTime").datepicker('getDate');
+  var calculatedEventTime = new Date();
+
+  if(autoMode)
   {
-    var autoMode = ($('input:radio[name="timeDiffRadios"]:checked').val() == "timeDiffRadioCalculated");
-    var diffInMinutes = 0;
-    var now = new Date();
-    var remoteComputerTime = $("#remoteTime").datepicker('getDate');
-    var eventComputerTime = $("#eventTime").datepicker('getDate');
-    var calculatedEventTime = new Date();
-
-    if(autoMode)
+    if (!remoteComputerTime)
     {
-      if (!remoteComputerTime)
+      document.getElementById("remotetimeDiff").innerText = "בחר זמן מחשב מרוחק";
+      document.getElementById("eventTimeCalculate").innerText = "בחר זמן מחשב מרוחק";
+    }
+    else
+    {
+      //get rid of seconds and milliseconds
+      remoteComputerTime.setSeconds(0);
+      remoteComputerTime.setMicroseconds(0)
+      now.setSeconds(0);
+      now.setMicroseconds(0);
+      if(eventComputerTime)
       {
-        document.getElementById("remotetimeDiff").innerText = "בחר זמן מחשב מרוחק";
-        document.getElementById("eventTimeCalculate").innerText = "בחר זמן מחשב מרוחק";
+        eventComputerTime.setSeconds(0);
+        eventComputerTime.setMicroseconds(0);      
+      }
+
+      var diffstr = "";
+      var diffdirection = "";
+      diffInMinutes = now - remoteComputerTime;
+
+      //Convert to minutes
+      diffInMinutes = Math.floor(diffInMinutes/1000/60);
+
+      if(diffInMinutes < 0)
+      {
+        diffdirection += "מאחר ב";
+      }
+      else if(diffInMinutes > 0)
+      {
+        diffdirection += "מקדים ב";
       }
       else
       {
-        //get rid of seconds and milliseconds
-        remoteComputerTime.setSeconds(0);
-        remoteComputerTime.setMicroseconds(0)
-        now.setSeconds(0);
-        now.setMicroseconds(0);
+        document.getElementById("remotetimeDiff").innerText = "אין הבדל זמנים";
         if(eventComputerTime)
-        {
-          eventComputerTime.setSeconds(0);
-          eventComputerTime.setMicroseconds(0);      
-        }
-
-        var diffstr = "";
-        var diffdirection = "";
-        diffInMinutes = now - remoteComputerTime;
-
-        //Convert to minutes
-        diffInMinutes = Math.floor(diffInMinutes/1000/60);
-
-        if(diffInMinutes < 0)
-        {
-          diffdirection += "מאחר ב";
-        }
-        else if(diffInMinutes > 0)
-        {
-          diffdirection += "מקדים ב";
-        }
-        else
-        {
-          document.getElementById("remotetimeDiff").innerText = "אין הבדל זמנים";
-          if(eventComputerTime)
-            document.getElementById("eventTimeCalculate").innerText = dateToHebrewtring(eventComputerTime);
-          return;
-        }
-        var absdiff = Math.abs(diffInMinutes);
-        var appendComma = false;
-        var days = Math.floor(absdiff /*/ 1000 / 60*/ / 60 / 24);
-        absdiff -= days /* * 1000 * 60*/ * 60 * 24;
-        var hours = Math.floor(absdiff /* / 1000 / 60 */  / 60);
-        absdiff -= hours * 60 /* * 1000 * 60 * 60*/;
-        var minutes = Math.floor(absdiff /* / 1000 / 60*/);
-        absdiff -= hours /* * 1000 * 60 */;
-
-        if(days > 0)
-        {
-          diffstr = (days == 1)? "יום אחד" : "-" + days + " ימים";
-        }
-
-        if(hours > 0)
-        {
-          diffstr += (days > 0)? ((minutes > 0)? ", " : " ו") : "";
-          diffstr += (hours == 1)?  "שעה אחת" : ((days > 0) ? "" : "-") + hours + " שעות";
-        }
-        
-        if(minutes > 0)
-        {
-          diffstr += (days+hours > 0)? " ו" : "";
-          diffstr += (minutes == 1)? "דקה אחת" : (((days + hours > 0) ? "-":"") + minutes + " דקות");
-        }
-        document.getElementById("remotetimeDiff").innerText = diffdirection + diffstr;
+          document.getElementById("eventTimeCalculate").innerText = dateToHebrewtring(eventComputerTime);
+        return;
       }
-    }
-    else
-    {
-      calculatedEventTime = eventComputerTime;
-      var direction = $("#manualDiffDirection").val();
-      diffInMinutes = readNum($("#manualDiffMinutes").val());
-      diffInMinutes += readNum($("#manualDiffHours").val()) * 60;
-      diffInMinutes += readNum($("#manualDiffDays").val()) * 60 * 24;
-      if(direction == "later")
+      var absdiff = Math.abs(diffInMinutes);
+      var appendComma = false;
+      var days = Math.floor(absdiff /*/ 1000 / 60*/ / 60 / 24);
+      absdiff -= days /* * 1000 * 60*/ * 60 * 24;
+      var hours = Math.floor(absdiff /* / 1000 / 60 */  / 60);
+      absdiff -= hours * 60 /* * 1000 * 60 * 60*/;
+      var minutes = Math.floor(absdiff /* / 1000 / 60*/);
+      absdiff -= hours /* * 1000 * 60 */;
+
+      if(days > 0)
       {
-        diffInMinutes *= -1;
+        diffstr = (days == 1)? "יום אחד" : "-" + days + " ימים";
       }
-    }
 
-    if(!eventComputerTime)
-    {
-      document.getElementById("eventTimeCalculate").innerText = "בחר זמן אירוע";
-    }
-    else
-    {
-      calculatedEventTime.setMinutes(eventComputerTime.getMinutes() + diffInMinutes);
-      document.getElementById("eventTimeCalculate").innerText = dateToHebrewtring(calculatedEventTime);
+      if(hours > 0)
+      {
+        diffstr += (days > 0)? ((minutes > 0)? ", " : " ו") : "";
+        diffstr += (hours == 1)?  "שעה אחת" : ((days > 0) ? "" : "-") + hours + " שעות";
+      }
+      
+      if(minutes > 0)
+      {
+        diffstr += (days+hours > 0)? " ו" : "";
+        diffstr += (minutes == 1)? "דקה אחת" : (((days + hours > 0) ? "-":"") + minutes + " דקות");
+      }
+      document.getElementById("remotetimeDiff").innerText = diffdirection + diffstr;
     }
   }
-
-  function readNum(value)
+  else
   {
-    if(!value)
+    calculatedEventTime = eventComputerTime;
+    var direction = $("#manualDiffDirection").val();
+    diffInMinutes = readNum($("#manualDiffMinutes").val());
+    diffInMinutes += readNum($("#manualDiffHours").val()) * 60;
+    diffInMinutes += readNum($("#manualDiffDays").val()) * 60 * 24;
+    if(direction == "later")
     {
-      return 0;
+      diffInMinutes *= -1;
     }
-    var n = parseInt(value);
-    if(n && isNaN(n))
-    {
-      return 0;
-    }
-    return n;
   }
 
-    var favicon = "\
-      iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQI\
-      CAgIfAhkiAAAAAlwSFlzAAAAdgAAAHYBTnsmCAAAABl0RVh0U29mdHdh\
-      cmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIdSURBVDiNlZFLSFRRHMZ/\
-      5z5m7szca6g0PtJkICR8BC5aGFIDQjGLMLBC6EGbQDCoZdQmF+XCRVtp\
-      JUopioQLrRSCdKEgRWK2aZckSaM2o456z320mqGBGdBvd77///wO5/uE\
-      /yju85/2f3k4GS931izxKTw6H6eIlGKDoyoHkBeu4TRfBHE8Zm7bO1nL\
-      QddTdvrfIO/2gKodD5CVGzLJtF1BXu44EiDvGfH3D+HFOcTIIGI/k/Nv\
-      Tfg1rs15J0WNrjI2cl9s5O5kW/AqYijJNfZ/2rkWklY1g4m+9EZpTDib\
-      v410ulyz7QCGybe0Rdu72yItitWYtKp5fvUV8Trpd7SUiKnZJYSq0dTY\
-      wIspwaEb3lWqlXIN6M0LJcg5TRVlg4m+lkt1tiXXvwvR0krACKAIgaHZ\
-      VG5Okqy8F9nbZFgUCqZrxK89EfFX+9ullV149nKU0hKTO9fbAfi6rjM0\
-      H5IFS1d0GpSdDX1ucTXPn55d4MvKDwCWPr5F2kIvWLbvcRA2TVlXEzWy\
-      XmeildISk4poGQBNzWdZWfEpCHDg87ZniqqqAFK66LpKQ/1pTlVFAZCO\
-      w5beRCAkUgW/MH5T7AoY6nu/JQdez+TNbCl50DvMzHLQd3WeFAwRIDHt\
-      B6O7hwtnytX6zkY/Mj46SSRiEY7FmVkO+rrhfhjv0RJFAQA3xnzV0Og2\
-      VB7u7LmxzJqiBUMi5QV4PNEtBgD+Af+owZNEbOuaAAAAAElFTkSuQmCC";
-  var docHead = document.getElementsByTagName('head')[0];
-  var faviconlink = document.createElement('link');
-  faviconlink.rel = 'shortcut icon';
-  faviconlink.type = 'image/x-icon';
-  faviconlink.href = 'data:image/png;base64,'+favicon;
-  docHead.appendChild(faviconlink);
+  if(!eventComputerTime)
+  {
+    document.getElementById("eventTimeCalculate").innerText = "בחר זמן אירוע";
+  }
+  else
+  {
+    calculatedEventTime.setMinutes(eventComputerTime.getMinutes() + diffInMinutes);
+    document.getElementById("eventTimeCalculate").innerText = dateToHebrewtring(calculatedEventTime);
+  }
+}
 
-  var mobilefavicon = document.createElement('link');
-  mobilefavicon.rel = 'apple-touch-icon';
-  mobilefavicon.sizes = '152x152';
-  mobilefavicon.href = 'https://raw.githubusercontent.com/alonrotem/DateTimeConverter/master/docs/imgs/logox152.png';
-  docHead.appendChild(mobilefavicon);
+function readNum(value)
+{
+  if(!value)
+  {
+    return 0;
+  }
+  var n = parseInt(value);
+  if(n && isNaN(n))
+  {
+    return 0;
+  }
+  return n;
+}
+
+  var favicon = "\
+    iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQI\
+    CAgIfAhkiAAAAAlwSFlzAAAAdgAAAHYBTnsmCAAAABl0RVh0U29mdHdh\
+    cmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIdSURBVDiNlZFLSFRRHMZ/\
+    5z5m7szca6g0PtJkICR8BC5aGFIDQjGLMLBC6EGbQDCoZdQmF+XCRVtp\
+    JUopioQLrRSCdKEgRWK2aZckSaM2o456z320mqGBGdBvd77///wO5/uE\
+    /yju85/2f3k4GS931izxKTw6H6eIlGKDoyoHkBeu4TRfBHE8Zm7bO1nL\
+    QddTdvrfIO/2gKodD5CVGzLJtF1BXu44EiDvGfH3D+HFOcTIIGI/k/Nv\
+    Tfg1rs15J0WNrjI2cl9s5O5kW/AqYijJNfZ/2rkWklY1g4m+9EZpTDib\
+    v410ulyz7QCGybe0Rdu72yItitWYtKp5fvUV8Trpd7SUiKnZJYSq0dTY\
+    wIspwaEb3lWqlXIN6M0LJcg5TRVlg4m+lkt1tiXXvwvR0krACKAIgaHZ\
+    VG5Okqy8F9nbZFgUCqZrxK89EfFX+9ullV149nKU0hKTO9fbAfi6rjM0\
+    H5IFS1d0GpSdDX1ucTXPn55d4MvKDwCWPr5F2kIvWLbvcRA2TVlXEzWy\
+    XmeildISk4poGQBNzWdZWfEpCHDg87ZniqqqAFK66LpKQ/1pTlVFAZCO\
+    w5beRCAkUgW/MH5T7AoY6nu/JQdez+TNbCl50DvMzHLQd3WeFAwRIDHt\
+    B6O7hwtnytX6zkY/Mj46SSRiEY7FmVkO+rrhfhjv0RJFAQA3xnzV0Og2\
+    VB7u7LmxzJqiBUMi5QV4PNEtBgD+Af+owZNEbOuaAAAAAElFTkSuQmCC";
+var docHead = document.getElementsByTagName('head')[0];
+var faviconlink = document.createElement('link');
+faviconlink.rel = 'shortcut icon';
+faviconlink.type = 'image/x-icon';
+faviconlink.href = 'data:image/png;base64,'+favicon;
+docHead.appendChild(faviconlink);
+
+var mobilefavicon = document.createElement('link');
+mobilefavicon.rel = 'apple-touch-icon';
+mobilefavicon.sizes = '152x152';
+mobilefavicon.href = 'https://raw.githubusercontent.com/alonrotem/DateTimeConverter/master/docs/imgs/logox152.png';
+docHead.appendChild(mobilefavicon);
 
                 </script>
             </div>
