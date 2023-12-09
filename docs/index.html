@@ -275,14 +275,29 @@ $(".dtpicker").datetimepicker({
   dateFormat: "יום DD, dd/mm/yy"
 });
 
-$("#currentTime").datetimepicker("option", { onClose : function(dateText) 
+$("#currentTime, #remoteTime, #eventTime").datetimepicker("option", 
+{ 
+  onClose : function(dateText, e) 
   { 
-    if(dateText != "") {
+    if(e.input.get()[0].id == "currentTime" && dateText != "") {
       currentTimeChanged = true;
     }
+    recalculate();
   } 
 });
 
+
+$("#currentTime, #remoteTime, #eventTime").datetimepicker("option", 
+{ 
+  onSelect : function(dateText, e) 
+  { 
+    if(e.input.get()[0].id == "currentTime")
+    {
+      currentTimeChanged = true;
+    }
+    recalculate();
+  }
+});
 
 $("#eventTimePick").click(function(){
   $("#eventTime").datepicker("show");
@@ -414,6 +429,8 @@ function recalculate()
       var minutes = Math.floor(absdiff /* / 1000 / 60*/);
       absdiff -= hours /* * 1000 * 60 */;
 
+      calculatedEventTime = eventComputerTime;
+
       if(days > 0)
       {
         diffstr = (days == 1)? "יום אחד" : "-" + days + " ימים";
@@ -435,12 +452,12 @@ function recalculate()
   }
   else
   {
-    calculatedEventTime = eventComputerTime;
+    
     var direction = $("#manualDiffDirection").val();
     diffInMinutes = readNum($("#manualDiffMinutes").val());
     diffInMinutes += readNum($("#manualDiffHours").val()) * 60;
     diffInMinutes += readNum($("#manualDiffDays").val()) * 60 * 24;
-    if(direction == "later")
+    if(direction != "later")
     {
       diffInMinutes *= -1;
     }
